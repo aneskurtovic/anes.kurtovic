@@ -1,0 +1,38 @@
+---
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section id="about" class="reveal">
+  <div class="container">
+    <SectionHeading title="About" />
+    <div class="about-content">
+      <p>
+        I'm a Software Engineer based in Sarajevo with 4+ years of experience building
+        scalable backend systems and full-stack applications. I specialize in .NET, microservices,
+        and cloud-native architectures — from modernizing legacy systems to shipping real-time
+        multiplayer games.
+      </p>
+      <p>
+        I'm passionate about clean architecture, test-driven development, and delivering
+        software that makes a real impact. When I'm not coding, I'm probably earning another
+        AWS certification.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-content {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about-content p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+</style>

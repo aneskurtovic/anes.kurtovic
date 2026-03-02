@@ -1,0 +1,79 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+import { certifications } from '../data/certifications';
+---
+
+<section id="certifications">
+  <div class="container">
+    <SectionHeading title="Certifications" />
+    <div class="certs-grid reveal-stagger">
+      {certifications.map((cert) => (
+        <div class="cert-card">
+          <div class="cert-icon">
+            <Icon name={cert.provider} size={28} />
+          </div>
+          <p class="cert-name">{cert.name}</p>
+          <span class="cert-code">{cert.code}</span>
+          <span class="cert-year">{cert.year}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .cert-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  }
+
+  .cert-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px var(--accent-glow), 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: rgba(56, 189, 248, 0.3);
+  }
+
+  .cert-icon {
+    color: var(--accent);
+  }
+
+  .cert-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .cert-code {
+    font-family: var(--font-mono);
+    background: var(--accent-glow);
+    color: var(--accent);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius);
+    font-size: 0.8rem;
+  }
+
+  .cert-year {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 768px) {
+    .certs-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

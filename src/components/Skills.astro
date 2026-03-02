@@ -1,0 +1,84 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { skills } from '../data/skills';
+---
+
+<section id="skills">
+  <div class="container">
+    <SectionHeading title="Skills" />
+    <div class="skills-grid reveal-stagger">
+      {skills.map((category) => (
+        <div class="skill-card">
+          <h3>{category.name}</h3>
+          <div class="skill-tags">
+            {category.items.map((item) => (
+              <span class="skill-tag">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+
+  .skill-card:hover {
+    box-shadow: 0 0 15px var(--accent-glow);
+    border-color: rgba(56, 189, 248, 0.2);
+  }
+
+  .skill-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.3rem 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .skill-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .skills-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,124 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { experiences } from '../data/experience';
+---
+
+<section id="experience" class="reveal">
+  <div class="container">
+    <SectionHeading title="Experience" />
+    <div class="experience-cards reveal-stagger">
+      {experiences.map((exp) => (
+        <div class="exp-card">
+          <div class="exp-header">
+            <h3 class="exp-company">{exp.company} &middot; {exp.project}</h3>
+            <p class="exp-role">{exp.role} &middot; {exp.period}</p>
+            <p class="exp-location">{exp.location}</p>
+          </div>
+          <ul class="exp-bullets">
+            {exp.bullets.map((bullet) => (
+              <li>{bullet}</li>
+            ))}
+          </ul>
+          <div class="exp-tags">
+            {exp.tags.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .experience-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .exp-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 2rem;
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+
+  .exp-card:hover {
+    box-shadow: 0 0 20px var(--accent-glow), 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-color: rgba(56, 189, 248, 0.3);
+  }
+
+  .exp-header {
+    margin-bottom: 1rem;
+  }
+
+  .exp-company {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .exp-role {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 0.15rem;
+  }
+
+  .exp-location {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .exp-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-bullets li {
+    position: relative;
+    padding-left: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .exp-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background: var(--accent-glow);
+    color: var(--accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius);
+  }
+
+  @media (max-width: 768px) {
+    .exp-card {
+      padding: 1.25rem 1.25rem;
+    }
+  }
+</style>

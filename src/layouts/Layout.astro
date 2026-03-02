@@ -1,0 +1,97 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Anes Kurtovic | Software Engineer',
+  description = 'Portfolio of Anes Kurtovic — Software Engineer specializing in .NET, microservices, and full-stack development.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Anes Kurtovic" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aneskurtovic.com" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Mobile nav toggle
+        const toggle = document.getElementById('nav-toggle');
+        const links = document.getElementById('nav-links');
+        toggle?.addEventListener('click', () => links?.classList.toggle('open'));
+        links?.querySelectorAll('a').forEach((a) =>
+          a.addEventListener('click', () => links?.classList.remove('open'))
+        );
+
+        // Navbar glassmorphism on scroll
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+          nav?.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Active nav link based on scroll position
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        window.addEventListener('scroll', () => {
+          let current = '';
+          sections.forEach((section) => {
+            const top = section.offsetTop - 120;
+            if (window.scrollY >= top) {
+              current = section.getAttribute('id') || '';
+            }
+          });
+          navLinks.forEach((link) => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+              link.classList.add('active');
+            }
+          });
+        });
+
+        // Intersection Observer for scroll reveal
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => observer.observe(el));
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+  @import '../styles/animations.css';
+</style>

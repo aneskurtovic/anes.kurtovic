@@ -1,0 +1,143 @@
+---
+import Icon from './Icon.astro';
+import { socialLinks } from '../data/social';
+---
+
+<section class="hero" id="hero">
+  <div class="container hero-content">
+    <p class="hero-animate greeting">Hi, my name is</p>
+    <h1 class="hero-animate name">Anes Kurtovic</h1>
+    <p class="hero-animate subtitle">Software Engineer</p>
+    <p class="hero-animate tagline">
+      I build scalable backend systems and full-stack applications.
+    </p>
+    <div class="hero-animate hero-actions">
+      <a href="/Anes_Kurtovic_2025.pdf" target="_blank" rel="noopener noreferrer" class="resume-btn">
+        Download Resume
+      </a>
+      <div class="social-links">
+        {socialLinks.map((link) => (
+          <a
+            href={link.url}
+            target={link.url.startsWith('mailto') ? undefined : '_blank'}
+            rel={link.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+            aria-label={link.name}
+            class="social-link"
+          >
+            <Icon name={link.icon} size={22} />
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 0 6rem;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(80px);
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .greeting {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .name {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .resume-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: var(--radius);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .resume-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px var(--accent-glow), 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+
+  .social-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    transform: scale(1.1);
+  }
+</style>
