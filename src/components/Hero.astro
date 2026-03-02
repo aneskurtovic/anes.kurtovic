@@ -4,29 +4,78 @@ import { socialLinks } from '../data/social';
 ---
 
 <section class="hero" id="hero">
-  <div class="container hero-content">
-    <p class="hero-animate greeting">Hi, my name is</p>
-    <h1 class="hero-animate name">Anes Kurtovic</h1>
-    <p class="hero-animate subtitle">Software Engineer</p>
-    <p class="hero-animate tagline">
-      I build scalable backend systems and full-stack applications.
-    </p>
-    <div class="hero-animate hero-actions">
-      <a href={`${import.meta.env.BASE_URL}Anes_Kurtovic_2025.pdf`} target="_blank" rel="noopener noreferrer" class="resume-btn">
-        Download Resume
-      </a>
-      <div class="social-links">
-        {socialLinks.map((link) => (
-          <a
-            href={link.url}
-            target={link.url.startsWith('mailto') ? undefined : '_blank'}
-            rel={link.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-            aria-label={link.name}
-            class="social-link"
-          >
-            <Icon name={link.icon} size={22} />
-          </a>
-        ))}
+  <!-- Animated gradient mesh blobs -->
+  <div class="hero-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Floating code-themed shapes (hidden on mobile) -->
+  <span class="float-shape shape-1" aria-hidden="true">{ }</span>
+  <span class="float-shape shape-2" aria-hidden="true">&lt;/&gt;</span>
+  <span class="float-shape shape-3" aria-hidden="true">&#9679;</span>
+  <span class="float-shape shape-4" aria-hidden="true">&#9670;</span>
+  <span class="float-shape shape-5" aria-hidden="true">[ ]</span>
+  <span class="float-shape shape-6" aria-hidden="true">#</span>
+
+  <!-- Mouse-following glow -->
+  <div class="mouse-glow" id="mouse-glow"></div>
+
+  <div class="container hero-grid">
+    <!-- Left column: existing text content -->
+    <div class="hero-content">
+      <p class="hero-animate greeting">Hi, my name is</p>
+      <h1 class="hero-animate name">Anes Kurtovic</h1>
+      <p class="hero-animate subtitle">Software Engineer</p>
+      <p class="hero-animate tagline">
+        I build scalable backend systems and full-stack applications.
+      </p>
+      <div class="hero-animate hero-actions">
+        <a href={`${import.meta.env.BASE_URL}Anes_Kurtovic_2025.pdf`} target="_blank" rel="noopener noreferrer" class="resume-btn">
+          Download Resume
+        </a>
+        <div class="social-links">
+          {socialLinks.map((link) => (
+            <a
+              href={link.url}
+              target={link.url.startsWith('mailto') ? undefined : '_blank'}
+              rel={link.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+              aria-label={link.name}
+              class="social-link"
+            >
+              <Icon name={link.icon} size={22} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: terminal code block -->
+    <div class="hero-animate terminal-wrapper">
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">~/journey.log</span>
+        </div>
+        <pre class="terminal-body"><code><span class="t-prompt">$</span> cat ~/journey.log
+
+<span class="t-year">[2021]</span> <span class="t-bar-mid">▓▓</span> Tacta — CoBen
+       <span class="t-arrow">→</span> 10+ microservices, DDD, event sourcing
+
+<span class="t-year">[2022]</span> <span class="t-bar-mid">▓▓</span> Roko Labs — FracStream
+       <span class="t-arrow">→</span> 15s → 3s page loads (-80%)
+
+<span class="t-year">[2023]</span> <span class="t-bar-full">██</span> Roko Labs — Kipany
+       <span class="t-arrow">→</span> Modernized 25+ legacy .NET apps
+
+<span class="t-year">[2025]</span> <span class="t-bar-full">██</span> Roko Labs — People 2.0
+       <span class="t-arrow">→</span> Legacy .NET desktop + web overhaul
+       <span class="t-arrow">→</span> AWS Certified x3<span class="cursor">|</span></code></pre>
       </div>
     </div>
   </div>
@@ -38,21 +87,135 @@ import { socialLinks } from '../data/social';
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6rem 0 6rem;
+    padding: 6rem 0 3rem;
     position: relative;
+    overflow: hidden;
   }
 
-  .hero::before {
-    content: '';
+  /* ── Gradient mesh blobs ── */
+  .hero-blobs {
     position: absolute;
-    top: 20%;
-    left: -10%;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+  }
+
+  .blob-1 {
+    width: 600px;
+    height: 600px;
+    top: -10%;
+    left: -5%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+    animation: blob-drift-1 25s ease-in-out infinite;
+  }
+
+  .blob-2 {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-    border-radius: 50%;
+    top: 50%;
+    right: -10%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.10) 0%, transparent 70%);
+    animation: blob-drift-2 30s ease-in-out infinite;
+  }
+
+  .blob-3 {
+    width: 450px;
+    height: 450px;
+    bottom: -15%;
+    left: 30%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
+    animation: blob-drift-3 20s ease-in-out infinite;
+  }
+
+  /* ── Floating shapes ── */
+  .float-shape {
+    position: absolute;
+    font-family: var(--font-mono);
+    color: var(--accent);
     pointer-events: none;
-    filter: blur(80px);
+    z-index: 1;
+    user-select: none;
+  }
+
+  .shape-1 {
+    top: 15%;
+    right: 12%;
+    font-size: 1.4rem;
+    opacity: 0.08;
+    animation: float-1 20s ease-in-out infinite;
+  }
+
+  .shape-2 {
+    top: 25%;
+    right: 30%;
+    font-size: 1.1rem;
+    opacity: 0.06;
+    animation: float-2 25s ease-in-out infinite;
+  }
+
+  .shape-3 {
+    bottom: 30%;
+    right: 8%;
+    font-size: 0.8rem;
+    opacity: 0.10;
+    animation: float-3 18s ease-in-out infinite;
+  }
+
+  .shape-4 {
+    top: 60%;
+    right: 25%;
+    font-size: 1rem;
+    opacity: 0.07;
+    animation: float-1 22s ease-in-out infinite reverse;
+    transform: rotate(45deg);
+  }
+
+  .shape-5 {
+    top: 10%;
+    right: 45%;
+    font-size: 1.2rem;
+    opacity: 0.05;
+    animation: float-2 15s ease-in-out infinite;
+  }
+
+  .shape-6 {
+    bottom: 20%;
+    right: 40%;
+    font-size: 1.3rem;
+    opacity: 0.06;
+    animation: float-3 23s ease-in-out infinite reverse;
+  }
+
+  /* ── Mouse glow ── */
+  .mouse-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    will-change: transform;
+  }
+
+  /* ── Two-column grid ── */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+    z-index: 2;
   }
 
   .hero-content {
@@ -77,6 +240,7 @@ import { socialLinks } from '../data/social';
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.15));
   }
 
   .subtitle {
@@ -110,6 +274,7 @@ import { socialLinks } from '../data/social';
     font-size: 0.95rem;
     border-radius: var(--radius);
     transition: transform 0.2s, box-shadow 0.2s;
+    animation: pulse-glow 3s ease-in-out infinite;
   }
 
   .resume-btn:hover {
@@ -139,5 +304,108 @@ import { socialLinks } from '../data/social';
     border-color: var(--accent);
     background: var(--accent-glow);
     transform: scale(1.1);
+  }
+
+  /* ── Terminal ── */
+  .terminal-wrapper {
+    animation-delay: 0.7s !important;
+  }
+
+  .terminal {
+    background: rgba(18, 18, 26, 0.9);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(30, 30, 46, 0.6);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .terminal-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .terminal-body {
+    padding: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    overflow-x: auto;
+    margin: 0;
+  }
+
+  .terminal-body code {
+    font-family: inherit;
+  }
+
+  .t-prompt { color: #98c379; font-weight: 600; }
+  .t-year { color: var(--accent); font-weight: 600; }
+  .t-bar-dim { color: #4a4a5a; }
+  .t-bar-mid { color: #7c7c9a; }
+  .t-bar-full { color: var(--accent); }
+  .t-arrow { color: #e5c07b; }
+
+  .cursor {
+    animation: cursor-blink 1s step-end infinite;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .float-shape {
+      display: none;
+    }
+
+    .mouse-glow {
+      display: none;
+    }
+
+    .terminal-body {
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .terminal-body {
+      font-size: 0.65rem;
+      padding: 1rem;
+    }
   }
 </style>

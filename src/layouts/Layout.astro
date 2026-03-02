@@ -86,6 +86,21 @@ const {
           { threshold: 0.1 }
         );
         document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => observer.observe(el));
+
+        // Mouse-following glow (desktop only)
+        const glow = document.getElementById('mouse-glow');
+        const hero = document.getElementById('hero');
+        if (glow && hero && window.innerWidth > 768) {
+          hero.addEventListener('mousemove', (e) => {
+            const rect = hero.getBoundingClientRect();
+            glow.style.left = (e.clientX - rect.left) + 'px';
+            glow.style.top = (e.clientY - rect.top) + 'px';
+            glow.style.opacity = '1';
+          });
+          hero.addEventListener('mouseleave', () => {
+            glow.style.opacity = '0';
+          });
+        }
       });
     </script>
   </body>
