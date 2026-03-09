@@ -27,7 +27,7 @@ const navItems = [
 const logoHref = isBlog ? `${base}/` : '#hero';
 ---
 
-<nav class="nav" id="nav">
+<nav class={`nav${isBlog ? ' scrolled' : ''}`} id="nav">
   <div class="container nav-inner">
     <a href={logoHref} class="nav-logo">AK</a>
     <ul class="nav-links" id="nav-links">
