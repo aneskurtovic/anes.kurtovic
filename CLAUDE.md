@@ -33,3 +33,17 @@ Single-page Astro 5 portfolio site. Static output, no SSR. Zero JS frameworks �
 - Responsive breakpoints: 768px (tablet/mobile), 480px (small mobile).
 - The `Icon.astro` component uses a `Record<string, string>` mapping icon names to SVG path strings, rendered via `set:html`.
 - The resume PDF (`Anes_Kurtovic_2025.pdf`) lives in the repo root and is served from `public/` would need to be moved there if linked from the site (currently linked as `/Anes_Kurtovic_2025.pdf`).
+
+## Session Start Checklist
+
+When starting a new session:
+1. Read your MEMORY.md for context on recent work
+2. Check `docs/BACKLOG.md` for pending tasks
+3. Run `git log --oneline -5` to see recent commits
+4. Briefly tell me what you remember and what's pending
+
+## Continuity Files
+
+- **MEMORY.md** (auto-memory dir) — evolving session-to-session memory, auto-loaded by Claude Code
+- **docs/BACKLOG.md** — living backlog of features, bugs, and ideas (checked into repo)
+- **docs/plans/** — design docs and implementation plans

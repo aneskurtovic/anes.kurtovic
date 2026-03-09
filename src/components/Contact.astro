@@ -7,65 +7,169 @@ import { contactInfo, socialLinks } from '../data/social';
 <section id="contact" class="reveal">
   <div class="container">
     <SectionHeading title="Get In Touch" />
-    <div class="contact-content">
-      <p class="contact-intro">
-        Have a question or want to work together? Feel free to reach out.
-      </p>
-      <ul class="contact-list">
-        <li>
-          <a href={`mailto:${contactInfo.email}`} class="contact-item">
-            <Icon name="mail" size={20} />
-            <span>{contactInfo.email}</span>
-          </a>
-        </li>
-        <li>
-          <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} class="contact-item">
-            <Icon name="phone" size={20} />
-            <span>{contactInfo.phone}</span>
-          </a>
-        </li>
-        <li>
-          <div class="contact-item">
-            <Icon name="mappin" size={20} />
-            <span>{contactInfo.location}</span>
+    <div class="contact-grid">
+      <div class="contact-form-wrapper">
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
           </div>
-        </li>
-      </ul>
-      <div class="social-links">
-        {socialLinks.map((link) => (
-          <a
-            href={link.url}
-            target={link.url.startsWith('mailto') ? undefined : '_blank'}
-            rel={link.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-            aria-label={link.name}
-            class="social-link"
-          >
-            <Icon name={link.icon} size={22} />
-          </a>
-        ))}
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn" disabled title="Contact form coming soon">
+            <Icon name="send" size={18} />
+            <span>Send Message</span>
+          </button>
+          <p class="form-note">Form backend coming soon — for now, reach out directly below.</p>
+        </form>
+      </div>
+      <div class="contact-info">
+        <p class="contact-intro">
+          Have a question or want to work together? Feel free to reach out.
+        </p>
+        <ul class="contact-list">
+          <li>
+            <a href={`mailto:${contactInfo.email}`} class="contact-item">
+              <Icon name="mail" size={20} />
+              <span>{contactInfo.email}</span>
+            </a>
+          </li>
+          <li>
+            <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} class="contact-item">
+              <Icon name="phone" size={20} />
+              <span>{contactInfo.phone}</span>
+            </a>
+          </li>
+          <li>
+            <div class="contact-item">
+              <Icon name="mappin" size={20} />
+              <span>{contactInfo.location}</span>
+            </div>
+          </li>
+        </ul>
+        <div class="social-links">
+          {socialLinks.map((link) => (
+            <a
+              href={link.url}
+              target={link.url.startsWith('mailto') ? undefined : '_blank'}
+              rel={link.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+              aria-label={link.name}
+              class="social-link"
+            >
+              <Icon name={link.icon} size={22} />
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .contact-content {
-    max-width: 600px;
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 900px;
     margin: 0 auto;
-    text-align: center;
+    align-items: start;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.75rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.5;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: var(--radius);
+    border: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  }
+
+  .form-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+    font-style: italic;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .contact-intro {
     color: var(--text-muted);
     font-size: 1.05rem;
     line-height: 1.7;
-    margin-bottom: 2rem;
   }
 
   .contact-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 2rem;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -74,7 +178,6 @@ import { contactInfo, socialLinks } from '../data/social';
   .contact-item {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 0.75rem;
     color: var(--text-muted);
     text-decoration: none;
@@ -91,7 +194,6 @@ import { contactInfo, socialLinks } from '../data/social';
 
   .social-links {
     display: flex;
-    justify-content: center;
     gap: 1rem;
   }
 
@@ -112,5 +214,12 @@ import { contactInfo, socialLinks } from '../data/social';
     border-color: var(--accent);
     background: var(--accent-glow);
     transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
   }
 </style>

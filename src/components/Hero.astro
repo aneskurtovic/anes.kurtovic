@@ -1,11 +1,23 @@
 ---
 import Icon from './Icon.astro';
 import { socialLinks } from '../data/social';
+import { Image } from 'astro:assets';
+import profileImg from '../assets/anes-kurtovic.png';
 ---
 
 <section class="hero" id="hero">
+  <!-- Profile background image -->
+  <div class="hero-bg-photo">
+    <Image
+      src={profileImg}
+      alt=""
+      width={1200}
+      quality={75}
+      format="webp"
+    />
+  </div>
+
   <!-- Animated gradient mesh blobs -->
-  <div class="hero-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
@@ -65,17 +77,16 @@ import { socialLinks } from '../data/social';
         <pre class="terminal-body"><code><span class="t-prompt">$</span> cat ~/journey.log
 
 <span class="t-year">[2021]</span> <span class="t-bar-mid">▓▓</span> Tacta — CoBen
-       <span class="t-arrow">→</span> 10+ microservices, DDD, event sourcing
+       <span class="t-tech">.NET Core · Angular · DDD · Event Sourcing</span>
 
 <span class="t-year">[2022]</span> <span class="t-bar-mid">▓▓</span> Roko Labs — FracStream
-       <span class="t-arrow">→</span> 15s → 3s page loads (-80%)
+       <span class="t-tech">.NET · MongoDB · PostgreSQL · Auth0</span>
 
 <span class="t-year">[2023]</span> <span class="t-bar-full">██</span> Roko Labs — Kipany
-       <span class="t-arrow">→</span> Modernized 25+ legacy .NET apps
+       <span class="t-tech">.NET 8 · React · SQL Server · Jenkins</span>
 
 <span class="t-year">[2025]</span> <span class="t-bar-full">██</span> Roko Labs — People 2.0
-       <span class="t-arrow">→</span> Legacy .NET desktop + web overhaul
-       <span class="t-arrow">→</span> AWS Certified x3<span class="cursor">|</span></code></pre>
+       <span class="t-tech">.NET · Angular · WPF · SQL Server</span><span class="cursor">|</span></code></pre>
       </div>
     </div>
   </div>
@@ -90,6 +101,29 @@ import { socialLinks } from '../data/social';
     padding: 6rem 0 3rem;
     position: relative;
     overflow: hidden;
+  }
+
+  /* ── Background photo ── */
+  .hero-bg-photo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 55%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.3) 100%);
+    -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.3) 100%);
+  }
+
+  .hero-bg-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0.35;
+    filter: grayscale(30%);
   }
 
   /* ── Gradient mesh blobs ── */
@@ -211,7 +245,7 @@ import { socialLinks } from '../data/social';
   /* ── Two-column grid ── */
   .hero-grid {
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 3rem;
     position: relative;
@@ -369,7 +403,7 @@ import { socialLinks } from '../data/social';
   .t-bar-dim { color: #4a4a5a; }
   .t-bar-mid { color: #7c7c9a; }
   .t-bar-full { color: var(--accent); }
-  .t-arrow { color: #e5c07b; }
+  .t-tech { color: #7c7c9a; font-size: 0.75em; }
 
   .cursor {
     animation: cursor-blink 1s step-end infinite;
@@ -382,6 +416,10 @@ import { socialLinks } from '../data/social';
     .hero-grid {
       grid-template-columns: 1fr;
       gap: 2.5rem;
+    }
+
+    .hero-bg-photo {
+      display: none;
     }
 
     .float-shape {
