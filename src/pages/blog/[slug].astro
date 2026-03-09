@@ -26,7 +26,13 @@ const words = post.body?.split(/\s+/).length ?? 0;
 const readingTime = Math.max(1, Math.ceil(words / 200));
 ---
 
-<Layout title={`${post.data.title} | Anes Kurtovic`} description={post.data.description}>
+<Layout
+  title={`${post.data.title} | Anes Kurtovic`}
+  description={post.data.description}
+  ogType="article"
+  publishedDate={post.data.date.toISOString()}
+  tags={post.data.tags}
+>
   <Nav isBlog />
   <main class="post-page">
     <div class="post-column">

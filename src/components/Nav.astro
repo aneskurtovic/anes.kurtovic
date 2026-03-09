@@ -32,7 +32,7 @@ const logoHref = isBlog ? `${base}/` : '#hero';
     <a href={logoHref} class="nav-logo">AK</a>
     <ul class="nav-links" id="nav-links">
       {navItems.map((item) => (
-        <li><a href={item.href} class="nav-link">{item.label}</a></li>
+        <li><a href={item.href} class={`nav-link${item.label === 'Blog' ? ' nav-link--blog' : ''}`}>{item.label}</a></li>
       ))}
     </ul>
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
@@ -102,6 +102,28 @@ const logoHref = isBlog ? `${base}/` : '#hero';
 
   .nav-link.active::after {
     width: 100%;
+  }
+
+  /* Blog link — accent pill style */
+  .nav-link--blog {
+    color: var(--accent);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .nav-link--blog::after {
+    display: none;
+  }
+
+  .nav-link--blog:hover {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
   }
 
   .nav-toggle {
