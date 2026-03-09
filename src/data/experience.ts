@@ -11,9 +11,23 @@ export interface Experience {
 export const experiences: Experience[] = [
   {
     company: 'Roko Labs',
+    project: 'People 2.0',
+    role: 'Software Engineer',
+    period: 'Sep 2025 — Present',
+    location: 'New York, USA',
+    bullets: [
+      'Building and maintaining backend services with .NET Web API, supporting a large-scale workforce management platform with complex business logic and external integrations.',
+      'Developing and maintaining WPF desktop applications, implementing UI controls and handling ongoing maintenance across multiple client-facing tools.',
+      'Working with LLBGen ORM for data access against SQL Server, managing database schemas and optimizing queries for high-volume transactional workflows.',
+      'Contributing to the Angular-based web UI and integrating with numerous third-party external systems and services.',
+    ],
+    tags: ['.NET Web API', 'WPF', 'SQL Server', 'LLBGen', 'Angular'],
+  },
+  {
+    company: 'Roko Labs',
     project: 'Kipany',
     role: 'Software Engineer',
-    period: 'Jan 2023 — Present',
+    period: 'Jan 2023 — Sep 2025',
     location: 'New York, USA',
     bullets: [
       'Engineered and delivered a full-stack Job Management portal using .NET 8 and React, providing centralized monitoring, reporting, and execution capabilities for critical operational tasks across diverse server environments.',
