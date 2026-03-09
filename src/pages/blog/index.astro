@@ -62,7 +62,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
   .posts-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
@@ -122,6 +122,12 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     color: var(--accent);
     padding: 0.25rem 0.75rem;
     border-radius: var(--radius);
+  }
+
+  @media (max-width: 1024px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 768px) {
