@@ -1,18 +1,35 @@
 ---
 import Icon from './Icon.astro';
 
-const navItems = [
-  { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Contact', href: '#contact' },
+interface Props {
+  isBlog?: boolean;
+}
+
+const { isBlog = false } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const sectionItems = [
+  { label: 'About', anchor: '#about' },
+  { label: 'Experience', anchor: '#experience' },
+  { label: 'Projects', anchor: '#projects' },
+  { label: 'Skills', anchor: '#skills' },
+  { label: 'Contact', anchor: '#contact' },
 ];
+
+const navItems = [
+  ...sectionItems.map((item) => ({
+    label: item.label,
+    href: isBlog ? `${base}/${item.anchor}` : item.anchor,
+  })),
+  { label: 'Blog', href: `${base}/blog/` },
+];
+
+const logoHref = isBlog ? `${base}/` : '#hero';
 ---
 
 <nav class="nav" id="nav">
   <div class="container nav-inner">
-    <a href="#hero" class="nav-logo">AK</a>
+    <a href={logoHref} class="nav-logo">AK</a>
     <ul class="nav-links" id="nav-links">
       {navItems.map((item) => (
         <li><a href={item.href} class="nav-link">{item.label}</a></li>

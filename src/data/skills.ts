@@ -28,4 +28,8 @@ export const skills: SkillCategory[] = [
     name: 'Concepts',
     items: ['REST API', 'Microservices', 'DDD', 'Event Sourcing', 'TDD', 'Ports & Adapters'],
   },
+  {
+    name: 'AI-Augmented Development',
+    items: ['Claude Code', 'Agent Orchestration', 'Custom Skills & Hooks', 'MCP Servers', 'Prompt Engineering'],
+  },
 ];
