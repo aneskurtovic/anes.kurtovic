@@ -37,6 +37,15 @@ export const projects: Project[] = [
     live: 'https://aneskurtovic.github.io/Helifilm/',
   },
   {
+    name: 'MMA Klub Ratnik',
+    subtitle: 'Martial Arts Club Website — Web',
+    description:
+      'Website for MMA Club Ratnik in Sarajevo, covering MMA, kickboxing, and BJJ programs for men, women, and children. Features a weekly schedule, FAQ, contact form, and bilingual (BS/EN) content.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+    github: 'https://github.com/aneskurtovic/MMA-Klub-Ratnik',
+    live: 'https://aneskurtovic.github.io/MMA-Klub-Ratnik/',
+  },
+  {
     name: 'Apocalypse',
     subtitle: 'Full Stack — Mobile + Desktop + Web',
     description:
