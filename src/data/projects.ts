@@ -28,6 +28,15 @@ export const projects: Project[] = [
     ],
   },
   {
+    name: 'Helifilm',
+    subtitle: 'Aerial Cinematography Studio — Web',
+    description:
+      'Marketing website for a drone cinematography production company based in Sarajevo. Full-service studio covering aerial filming, post-production, and delivery for film, TV, tourism, and commercial clients across the Balkans.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    github: 'https://github.com/aneskurtovic/Helifilm',
+    live: 'https://aneskurtovic.github.io/Helifilm/',
+  },
+  {
     name: 'Apocalypse',
     subtitle: 'Full Stack — Mobile + Desktop + Web',
     description:
