@@ -5,6 +5,7 @@ export interface Experience {
   period: string;
   location: string;
   bullets: string[];
+  shortBullets: string[];
   tags: string[];
 }
 
@@ -21,6 +22,12 @@ export const experiences: Experience[] = [
       'Working with LLBGen ORM for data access against SQL Server, managing database schemas and optimizing queries for high-volume transactional workflows.',
       'Contributing to the Angular-based web UI and integrating with numerous third-party external systems and services.',
     ],
+    shortBullets: [
+      'Backend services in .NET Web API for a large-scale workforce management platform.',
+      'WPF desktop apps — UI controls and ongoing maintenance across client tools.',
+      'Schema management and query optimization (LLBGen + SQL Server) for high-volume workflows.',
+      'Angular web UI and integrations with numerous third-party systems.',
+    ],
     tags: ['.NET Web API', 'WPF', 'SQL Server', 'LLBGen', 'Angular'],
   },
   {
@@ -34,6 +41,12 @@ export const experiences: Experience[] = [
       'Implemented automated job execution and log aggregation workflows using Jenkins CI/CD, significantly streamlining operational processes and improving observability.',
       'Led the modernization of 25–30 legacy .NET Framework console applications to .NET 6, rewriting them into a modular monolith for improved performance and maintainability.',
       'Architected and developed robust, transactional features for critical workflow segments, incorporating automated cleanup mechanisms to ensure data integrity during failures.',
+    ],
+    shortBullets: [
+      'Built full-stack Job Management portal in .NET 8 + React — central monitoring, reporting, execution.',
+      'Jenkins CI/CD for automated job execution and log aggregation.',
+      'Modernized 25–30 legacy .NET Framework console apps into a .NET 6 modular monolith.',
+      'Transactional features with automatic cleanup on failure for critical workflows.',
     ],
     tags: ['.NET 8', 'React', 'Jenkins CI/CD', '.NET 6', 'SQL Server'],
   },
@@ -49,6 +62,12 @@ export const experiences: Experience[] = [
       'Engineered and deployed multiple .NET microservices, including an Auth0-integrated authentication service utilizing PostgreSQL, enhancing overall system modularity, security, and scalability.',
       'Achieved an 80% reduction in average page load times (from 15s to 3s) by implementing targeted backend optimizations, markedly improving user experience and system responsiveness.',
     ],
+    shortBullets: [
+      'Resolved API performance bottlenecks via endpoint analysis and targeted optimization.',
+      'Built a MongoDB-backed read microservice, decoupled from a legacy Django monolith.',
+      'Shipped Auth0-integrated auth microservice on PostgreSQL — modular, secure, scalable.',
+      '80% reduction in page load (15s → 3s) via targeted backend optimization.',
+    ],
     tags: ['.NET', 'MongoDB', 'Django', 'Auth0', 'PostgreSQL'],
   },
   {
@@ -62,6 +81,12 @@ export const experiences: Experience[] = [
       'Applied Domain-Driven Design (DDD) principles and championed Test-Driven Development (TDD) practices, ensuring high code quality and maintainability through comprehensive unit testing across the microservice architecture.',
       'Led the design and development of a complex, event-sourced data processing microservice, architecting for high scalability and data resilience in critical business workflows.',
       'Engineered microservices and REST APIs for an enterprise application managing construction workers in Belgium, handling complex integrations with government platforms and third-party services.',
+    ],
+    shortBullets: [
+      'Full-stack on a 10+ microservice enterprise app (.NET Core + Angular).',
+      'Championed DDD and TDD across the microservice architecture.',
+      'Designed event-sourced data processing microservice for critical business workflows.',
+      'REST APIs for a Belgian construction-worker management platform with government integrations.',
     ],
     tags: ['.NET Core', 'Angular', 'DDD', 'TDD', 'Event Sourcing'],
   },
