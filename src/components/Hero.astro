@@ -446,21 +446,36 @@ const pastEmployers = [
 
   /* ── Responsive ── */
   @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding: 5rem 0 2rem;
+    }
+
     .hero-grid {
       grid-template-columns: 1fr;
-      gap: 2.5rem;
+      gap: 2rem;
     }
 
-    .hero-bg-photo {
-      display: none;
-    }
-
-    .float-shape {
-      display: none;
-    }
-
+    .hero-bg-photo,
+    .float-shape,
     .mouse-glow {
       display: none;
+    }
+
+    .greeting {
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      margin-bottom: 0.5rem;
+    }
+
+    .trust-line {
+      margin-bottom: 0.85rem;
+    }
+
+    .tagline {
+      margin-bottom: 1.25rem;
     }
 
     .terminal-body {
@@ -472,11 +487,12 @@ const pastEmployers = [
     .hero-actions {
       flex-direction: column;
       align-items: flex-start;
+      gap: 1rem;
     }
 
     .terminal-body {
-      font-size: 0.65rem;
-      padding: 1rem;
+      font-size: 0.7rem;
+      padding: 0.9rem;
     }
   }
 </style>
