@@ -66,6 +66,35 @@
   50%      { box-shadow: 0 0 40px var(--accent-glow), 0 0 60px var(--accent-glow); }
 }
 
+/* ── Experience timeline dot pulse ── */
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 12px var(--accent-glow); }
+  50%      { box-shadow: 0 0 20px var(--accent-glow), 0 0 32px var(--accent-glow); }
+}
+
+.exp-dot {
+  animation: dot-pulse 2.8s ease-in-out infinite;
+}
+
+/* ── Tag shimmer on hover (precision pointer only) ── */
+@keyframes tag-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tag:hover {
+    background: linear-gradient(
+      110deg,
+      var(--accent-glow) 30%,
+      rgba(56, 189, 248, 0.35) 50%,
+      var(--accent-glow) 70%
+    );
+    background-size: 200% 100%;
+    animation: tag-shimmer 1.4s linear infinite;
+  }
+}
+
 /* ── Hero staggered load animations ── */
 .hero-animate {
   opacity: 0;
@@ -112,3 +141,28 @@
 .reveal-stagger.visible > *:nth-child(8)  { transition-delay: 0.40s; }
 .reveal-stagger.visible > *:nth-child(9)  { transition-delay: 0.45s; }
 .reveal-stagger.visible > *:nth-child(10) { transition-delay: 0.50s; }
+
+/* ── Reduced-motion guard ── */
+@media (prefers-reduced-motion: reduce) {
+  .blob,
+  .float-shape,
+  .exp-dot,
+  .resume-btn,
+  .tag:hover {
+    animation: none !important;
+  }
+
+  .tag:hover {
+    background: var(--accent-glow) !important;
+  }
+
+  #scroll-progress {
+    display: none;
+  }
+
+  .reveal,
+  .reveal-stagger > *,
+  .heading-line {
+    transition-duration: 0.001s !important;
+  }
+}

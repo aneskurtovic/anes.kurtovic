@@ -99,6 +99,55 @@ p {
   line-height: 1.65;
 }
 
+/* ── Scroll progress bar ── */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform: scaleX(var(--scroll, 0));
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--accent), rgba(56, 189, 248, 0.4));
+  z-index: 1000;
+  pointer-events: none;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  #scroll-progress {
+    height: 2px;
+  }
+}
+
+/* ── Spotlight utility (cards) ── */
+.spotlight {
+  position: relative;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle 180px at var(--mx, 50%) var(--my, 50%), var(--accent-glow), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+}
+
+.spotlight > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
   width: 8px;

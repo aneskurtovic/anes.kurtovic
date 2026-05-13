@@ -109,6 +109,7 @@ const structuredData = {
     />
   </head>
   <body>
+    <div id="scroll-progress" aria-hidden="true"></div>
     <slot />
 
     <script is:inline>
@@ -141,11 +142,15 @@ const structuredData = {
           a.addEventListener('click', closeMenu)
         );
 
-        // Navbar glassmorphism on scroll
+        // Navbar glassmorphism + scroll progress on scroll
         const nav = document.getElementById('nav');
+        const docEl = document.documentElement;
         window.addEventListener('scroll', () => {
           nav?.classList.toggle('scrolled', window.scrollY > 50);
-        });
+          const max = docEl.scrollHeight - window.innerHeight;
+          const progress = max > 0 ? window.scrollY / max : 0;
+          docEl.style.setProperty('--scroll', String(Math.min(1, Math.max(0, progress))));
+        }, { passive: true });
 
         // Active nav link based on scroll position
         const sections = document.querySelectorAll('section[id]');
@@ -178,7 +183,7 @@ const structuredData = {
           },
           { threshold: 0.1 }
         );
-        document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => observer.observe(el));
+        document.querySelectorAll('.reveal, .reveal-stagger, .reveal-line').forEach((el) => observer.observe(el));
 
         // Mouse-following glow (desktop only)
         const glow = document.getElementById('mouse-glow');
@@ -193,6 +198,18 @@ const structuredData = {
           hero.addEventListener('mouseleave', () => {
             glow.style.opacity = '0';
           });
+        }
+
+        // Cursor spotlight on cards (precision pointer only)
+        const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (fine) {
+          document.addEventListener('pointermove', (e) => {
+            const card = e.target instanceof Element ? e.target.closest('.spotlight') : null;
+            if (!card) return;
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width) * 100 + '%');
+            card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height) * 100 + '%');
+          }, { passive: true });
         }
       });
     </script>
