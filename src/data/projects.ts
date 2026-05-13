@@ -12,19 +12,20 @@ export interface Project {
 export const projects: Project[] = [
   {
     name: 'Ludo Nexus',
-    subtitle: 'Real-time Multiplayer Board Game',
+    subtitle: 'Multiplayer Ludo with Elemental Powers',
     description:
-      'A modern, real-time multiplayer take on the classic Ludo board game with Chaos Cards and elemental themes. Built as a game-client-style web app with immersive visuals and real-time gameplay.',
+      'A real-time, web-based reinvention of Ludo. Players pick one of 6 elemental affinities — each with a unique passive ability — and draw Chaos Cards mid-game to swing the board.',
     tags: ['.NET 9', 'SignalR', 'React 19', 'TypeScript', 'Tailwind CSS', 'Docker', 'Caddy'],
     live: 'https://ludo-nexus.com',
     featured: true,
     highlights: [
-      'Real-time multiplayer for 2–6 players via SignalR WebSockets',
-      'Room system with public/private lobbies and 6-character codes',
-      'Chaos Cards: Reverse, Blockade, Double Down, Swap',
-      '6 elemental themes with immersive visual design',
+      'Real-time multiplayer for 2–6 players over SignalR WebSockets',
+      '6 elemental affinities (Fire, Water, Air, Earth, Lightning, Nature) — each with a unique passive ability',
+      '4 Chaos Cards drawn mid-game: Reverse, Blockade, Double Down, Swap',
+      'Public lobbies + private rooms with 6-character invite codes',
+      'Local pass-and-play mode and online play with leaderboard',
       'Reconnection support and configurable turn timers',
-      'Built with AI assistance',
+      'Built solo with AI-assisted workflow',
     ],
   },
   {
