@@ -86,16 +86,16 @@ const current = experiences[0];
         <pre class="terminal-body"><code><span class="t-prompt">$</span> cat ~/journey.log
 
 <span class="t-year">[2021]</span> <span class="t-bar-mid">▓▓</span> Tacta — CoBen
-       <span class="t-tech">.NET · Angular · SQL Server · Domain Driven Design · Event Sourcing</span>
+<span class="t-tech">.NET · Angular · SQL Server · Domain Driven Design · Event Sourcing</span>
 
 <span class="t-year">[2022]</span> <span class="t-bar-mid">▓▓</span> Roko Labs — FracStream
-       <span class="t-tech">.NET · React · MongoDB + PostgreSQL · AWS · Auth0</span>
+<span class="t-tech">.NET · React · MongoDB + PostgreSQL · AWS · Auth0</span>
 
 <span class="t-year">[2023]</span> <span class="t-bar-full">██</span> Roko Labs — Kipany
-       <span class="t-tech">.NET · React · SQL Server · Jenkins</span>
+<span class="t-tech">.NET · React · SQL Server · Jenkins</span>
 
 <span class="t-year">[2025]</span> <span class="t-bar-full">██</span> Roko Labs — People 2.0
-       <span class="t-tech">.NET · Angular · SQL Server · WPF</span><span class="cursor">|</span></code></pre>
+<span class="t-tech">.NET · Angular · SQL Server · WPF</span><span class="cursor">|</span></code></pre>
       </div>
     </div>
   </div>
@@ -435,7 +435,12 @@ const current = experiences[0];
   .t-bar-dim { color: #4a4a5a; }
   .t-bar-mid { color: #7c7c9a; }
   .t-bar-full { color: var(--accent); }
-  .t-tech { color: #7c7c9a; font-size: 0.75em; }
+  .t-tech {
+    color: #7c7c9a;
+    font-size: 0.75em;
+    display: inline-block;
+    padding-left: 8em;
+  }
 
   .cursor {
     animation: cursor-blink 1s step-end infinite;
@@ -482,11 +487,6 @@ const current = experiences[0];
       white-space: pre-wrap;
       word-break: break-word;
       overflow-x: visible;
-    }
-
-    .t-tech {
-      display: inline-block;
-      padding-left: 0;
     }
   }
 
