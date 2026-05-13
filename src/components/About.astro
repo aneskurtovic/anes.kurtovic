@@ -6,34 +6,71 @@ import SectionHeading from './SectionHeading.astro';
   <div class="container">
     <SectionHeading title="About" />
     <div class="about-content">
-      <p>
-        I'm a Software Engineer based in Sarajevo with 4+ years of experience building
-        scalable backend systems and full-stack applications. I specialize in .NET, microservices,
-        and cloud-native architectures — from modernizing legacy systems to shipping real-time
-        multiplayer games.
+      <p class="about-hook">
+        Software Engineer based in Sarajevo with 4+ years building scalable backend systems and full-stack
+        applications. I specialize in .NET microservices and cloud-native architectures — from modernizing
+        legacy systems to shipping real-time multiplayer games.
       </p>
-      <p>
-        I'm passionate about clean architecture, test-driven development, and delivering
-        software that makes a real impact. I integrate AI agents and custom automation into my
-        development workflow — from orchestrating multi-agent builds to designing reusable
-        skill systems — shipping faster without cutting corners.
-      </p>
+      <ul class="about-bullets">
+        <li>
+          <strong>Clean architecture, DDD, and TDD-first</strong> — modular monoliths, event-sourced microservices, high coverage from day one.
+        </li>
+        <li>
+          <strong>Backend depth</strong> across .NET 6/8 Web API, SignalR, WPF, SQL Server, MongoDB, PostgreSQL, and Jenkins CI/CD.
+        </li>
+        <li>
+          <strong>AI-augmented workflow</strong> — I orchestrate multi-agent builds and design reusable skill systems to ship faster without cutting corners.
+        </li>
+      </ul>
     </div>
   </div>
 </section>
 
 <style>
   .about-content {
-    max-width: 700px;
+    max-width: 720px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 
-  .about-content p {
-    font-size: 1.05rem;
+  .about-hook {
+    font-size: 1.1rem;
     line-height: 1.7;
+    color: var(--text);
+  }
+
+  .about-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .about-bullets li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.65;
     color: var(--text-muted);
+  }
+
+  .about-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .about-bullets strong {
+    color: var(--text);
+    font-weight: 600;
   }
 </style>

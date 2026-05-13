@@ -35,6 +35,11 @@ export const projects: Project[] = [
     tags: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     github: 'https://github.com/aneskurtovic/Helifilm',
     live: 'https://aneskurtovic.github.io/Helifilm/',
+    highlights: [
+      'Cinematic landing page with full-bleed aerial reel and service breakdown',
+      'Static-export Next.js build deployed via GitHub Pages — zero hosting cost',
+      'Responsive layout tuned for tourism / commercial client pitches',
+    ],
   },
   {
     name: 'MMA Klub Ratnik',
@@ -44,6 +49,11 @@ export const projects: Project[] = [
     tags: ['HTML', 'CSS', 'JavaScript'],
     github: 'https://github.com/aneskurtovic/MMA-Klub-Ratnik',
     live: 'https://aneskurtovic.github.io/MMA-Klub-Ratnik/',
+    highlights: [
+      'Bilingual (Bosnian / English) site with persistent language switcher',
+      'Weekly training schedule, FAQ, and lead-capture contact form',
+      'Vanilla HTML/CSS/JS — no framework overhead, fast page loads',
+    ],
   },
   {
     name: 'Apocalypse',
@@ -52,6 +62,11 @@ export const projects: Project[] = [
       'Virtual electronic music festival application with a .NET 6 Web API backend, Flutter mobile client, WinForms desktop client, and ASP.NET MVC web client.',
     tags: ['.NET 6 Web API', 'Flutter', 'WinForms', 'ASP.NET MVC'],
     github: 'https://github.com/aneskurtovic/Apocalypse',
+    highlights: [
+      'Single .NET 6 Web API powering three independent clients',
+      'Flutter mobile + WinForms desktop + ASP.NET MVC web — one backend, three UX surfaces',
+      'University capstone exploring cross-platform client architecture',
+    ],
   },
   {
     name: 'Quizzard',
@@ -60,5 +75,9 @@ export const projects: Project[] = [
       'Quiz application with a RESTful API built with .NET Core 3.1 and a Single Page Application frontend built with Angular.',
     tags: ['.NET Core 3.1', 'Angular', 'REST API'],
     github: 'https://github.com/aneskurtovic/Quizard.API',
+    highlights: [
+      '.NET Core 3.1 REST API consumed by an Angular SPA',
+      'Early-career project — first end-to-end SPA + API stack',
+    ],
   },
 ];

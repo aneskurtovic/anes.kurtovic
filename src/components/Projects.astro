@@ -55,6 +55,13 @@ const other = projects.filter((p) => !p.featured);
             <p class="project-subtitle">{project.subtitle}</p>
           </div>
           <p class="project-description">{project.description}</p>
+          {project.highlights && project.highlights.length > 0 && (
+            <ul class="project-highlights">
+              {project.highlights.map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+          )}
           <div class="project-tags">
             {project.tags.map((tag) => (
               <span class="tag">{tag}</span>
@@ -238,6 +245,34 @@ const other = projects.filter((p) => !p.featured);
     line-height: 1.6;
     color: var(--text-muted);
     margin-bottom: 1rem;
+  }
+
+  .project-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .project-highlights li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+
+  .project-highlights li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
   }
 
   .project-tags {
