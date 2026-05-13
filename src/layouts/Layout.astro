@@ -116,9 +116,29 @@ const structuredData = {
         // Mobile nav toggle
         const toggle = document.getElementById('nav-toggle');
         const links = document.getElementById('nav-links');
-        toggle?.addEventListener('click', () => links?.classList.toggle('open'));
+        const close = document.getElementById('nav-close');
+        const backdrop = document.getElementById('nav-backdrop');
+        const openMenu = () => {
+          links?.classList.add('open');
+          backdrop?.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        };
+        const closeMenu = () => {
+          links?.classList.remove('open');
+          backdrop?.classList.remove('open');
+          document.body.style.overflow = '';
+        };
+        toggle?.addEventListener('click', () => {
+          if (links?.classList.contains('open')) closeMenu();
+          else openMenu();
+        });
+        close?.addEventListener('click', closeMenu);
+        backdrop?.addEventListener('click', closeMenu);
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && links?.classList.contains('open')) closeMenu();
+        });
         links?.querySelectorAll('a').forEach((a) =>
-          a.addEventListener('click', () => links?.classList.remove('open'))
+          a.addEventListener('click', closeMenu)
         );
 
         // Navbar glassmorphism on scroll

@@ -30,15 +30,19 @@ const logoHref = isBlog ? '/' : '#hero';
   <div class="container nav-inner">
     <a href={logoHref} class="nav-logo">AK</a>
     <ul class="nav-links" id="nav-links">
+      <button class="nav-close" id="nav-close" aria-label="Close menu" type="button">
+        <Icon name="x" size={24} />
+      </button>
       {navItems.map((item) => (
         <li><a href={item.href} class={`nav-link${item.label === 'Blog' ? ' nav-link--blog' : ''}`}>{item.label}</a></li>
       ))}
     </ul>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" type="button">
       <Icon name="menu" size={24} />
     </button>
   </div>
 </nav>
+<div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
 
 <style>
   .nav {
@@ -130,6 +134,35 @@ const logoHref = isBlog ? '/' : '#hero';
     color: var(--text);
   }
 
+  .nav-close {
+    display: none;
+    color: var(--text);
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .nav-close:hover { color: var(--accent); }
+
+  .nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .nav-backdrop.open {
+    display: block;
+    opacity: 1;
+  }
+
   /* Mobile */
   @media (max-width: 768px) {
     .nav-toggle {
@@ -152,10 +185,17 @@ const logoHref = isBlog ? '/' : '#hero';
       transform: translateX(100%);
       transition: transform 0.3s ease;
       box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+      z-index: 101;
     }
 
     .nav-links.open {
       transform: translateX(0);
+    }
+
+    .nav-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .nav-link {
