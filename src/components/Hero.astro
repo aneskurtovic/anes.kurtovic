@@ -6,9 +6,6 @@ import { Image } from 'astro:assets';
 import profileImg from '../assets/anes-kurtovic.png';
 
 const current = experiences[0];
-const pastEmployers = [
-  ...new Set(experiences.slice(1).map((e) => e.company)),
-].filter((c) => c !== current.company).join(', ');
 ---
 
 <section class="hero" id="hero">
@@ -48,8 +45,6 @@ const pastEmployers = [
       <p class="hero-animate subtitle">Software Engineer</p>
       <p class="hero-animate trust-line">
         Currently at <span class="trust-current">{current.company}</span>
-        <span class="trust-sep">·</span>
-        <span class="trust-past">Previously at {pastEmployers}</span>
       </p>
       <p class="hero-animate tagline">
         I build scalable backend systems and full-stack applications.
@@ -306,15 +301,6 @@ const pastEmployers = [
   .trust-current {
     color: var(--accent);
     font-weight: 600;
-  }
-
-  .trust-sep {
-    margin: 0 0.4rem;
-    opacity: 0.5;
-  }
-
-  .trust-past {
-    opacity: 0.85;
   }
 
   .tagline {
