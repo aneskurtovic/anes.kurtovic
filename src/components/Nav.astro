@@ -6,7 +6,6 @@ interface Props {
 }
 
 const { isBlog = false } = Astro.props;
-const base = import.meta.env.BASE_URL;
 
 const sectionItems = [
   { label: 'About', anchor: '#about' },
@@ -19,12 +18,12 @@ const sectionItems = [
 const navItems = [
   ...sectionItems.map((item) => ({
     label: item.label,
-    href: isBlog ? `${base}/${item.anchor}` : item.anchor,
+    href: isBlog ? `/${item.anchor}` : item.anchor,
   })),
-  { label: 'Blog', href: `${base}/blog/` },
+  { label: 'Blog', href: '/blog/' },
 ];
 
-const logoHref = isBlog ? `${base}/` : '#hero';
+const logoHref = isBlog ? '/' : '#hero';
 ---
 
 <nav class={`nav${isBlog ? ' scrolled' : ''}`} id="nav">

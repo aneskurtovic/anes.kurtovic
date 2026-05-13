@@ -27,7 +27,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
             day: 'numeric',
           });
           return (
-            <a href={`${import.meta.env.BASE_URL}/blog/${post.id}/`} class="post-card">
+            <a href={`/blog/${post.id}/`} class="post-card">
               <div class="post-card-header">
                 <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
               </div>
