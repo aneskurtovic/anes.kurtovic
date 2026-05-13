@@ -1,82 +1,165 @@
 ---
 import SectionHeading from './SectionHeading.astro';
 import { experiences } from '../data/experience';
+
+function startYear(period: string): string {
+  const match = period.match(/(\d{4})/);
+  return match ? match[1] : '';
+}
 ---
 
 <section id="experience" class="reveal">
   <div class="container">
     <SectionHeading title="Experience" />
-    <div class="experience-cards reveal-stagger">
-      {experiences.map((exp) => (
-        <div class="exp-card">
-          <div class="exp-header">
-            <h3 class="exp-company">{exp.company} &middot; {exp.project}</h3>
-            <p class="exp-role">{exp.role} &middot; {exp.period}</p>
-            <p class="exp-location">{exp.location}</p>
+    <div class="exp-timeline reveal-stagger">
+      {experiences.map((exp, i) => (
+        <details class="exp-row" open={i === 0}>
+          <summary class="exp-summary">
+            <span class="exp-year">{startYear(exp.period)}</span>
+            <span class="exp-dot" aria-hidden="true"></span>
+            <span class="exp-company">{exp.company}</span>
+            <span class="exp-divider">/</span>
+            <span class="exp-project">{exp.project}</span>
+            <span class="exp-summary-text">{exp.shortBullets[0]}</span>
+            <span class="exp-chevron" aria-hidden="true">+</span>
+          </summary>
+          <div class="exp-body">
+            <p class="exp-meta">{exp.role} <span class="dot">·</span> {exp.period} <span class="dot">·</span> {exp.location}</p>
+            <ul class="exp-bullets">
+              {exp.shortBullets.slice(1).map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+            <div class="exp-tags">
+              {exp.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
           </div>
-          <ul class="exp-bullets">
-            {exp.bullets.map((bullet) => (
-              <li>{bullet}</li>
-            ))}
-          </ul>
-          <div class="exp-tags">
-            {exp.tags.map((tag) => (
-              <span class="tag">{tag}</span>
-            ))}
-          </div>
-        </div>
+        </details>
       ))}
     </div>
   </div>
 </section>
 
 <style>
-  .experience-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  .exp-timeline {
+    position: relative;
+    padding-left: 2rem;
+    max-width: 920px;
+    margin: 0 auto;
   }
 
-  .exp-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem 2rem;
-    transition: box-shadow 0.3s, border-color 0.3s;
+  .exp-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent) 0%, var(--border) 100%);
   }
 
-  .exp-card:hover {
-    box-shadow: 0 0 20px var(--accent-glow), 0 4px 20px rgba(0, 0, 0, 0.2);
-    border-color: rgba(56, 189, 248, 0.3);
+  .exp-row {
+    position: relative;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
   }
 
-  .exp-header {
-    margin-bottom: 1rem;
+  .exp-row:last-child {
+    border-bottom: none;
+  }
+
+  .exp-summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 60px auto auto auto 1fr 1.25rem;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .exp-summary::-webkit-details-marker { display: none; }
+
+  .exp-year {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .exp-dot {
+    position: absolute;
+    left: -1.625rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
   }
 
   .exp-company {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text);
-    margin-bottom: 0.25rem;
   }
 
-  .exp-role {
+  .exp-divider {
+    color: var(--text-muted);
+    opacity: 0.5;
+  }
+
+  .exp-project {
     font-size: 0.95rem;
-    color: var(--text-muted);
-    margin-bottom: 0.15rem;
+    color: var(--accent);
+    font-family: var(--font-mono);
   }
 
-  .exp-location {
-    font-size: 0.85rem;
+  .exp-summary-text {
+    font-size: 0.9rem;
     color: var(--text-muted);
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
+
+  .exp-chevron {
+    color: var(--accent);
+    font-size: 1.1rem;
+    font-family: var(--font-mono);
+    transition: transform 0.25s;
+    justify-self: end;
+  }
+
+  .exp-row[open] .exp-chevron {
+    transform: rotate(45deg);
+  }
+
+  .exp-row[open] .exp-summary-text {
+    color: var(--text);
+    white-space: normal;
+  }
+
+  .exp-body {
+    padding: 1rem 0 0.5rem 60px;
+    margin-top: 0.5rem;
+  }
+
+  .exp-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-bottom: 0.85rem;
+  }
+
+  .dot { opacity: 0.5; margin: 0 0.2rem; }
 
   .exp-bullets {
     list-style: none;
     padding: 0;
-    margin: 0 0 1.25rem;
+    margin: 0 0 0.85rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -85,8 +168,8 @@ import { experiences } from '../data/experience';
   .exp-bullets li {
     position: relative;
     padding-left: 1.25rem;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.92rem;
+    line-height: 1.55;
     color: var(--text-muted);
   }
 
@@ -95,8 +178,8 @@ import { experiences } from '../data/experience';
     position: absolute;
     left: 0;
     top: 0.6em;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--accent);
   }
@@ -109,16 +192,30 @@ import { experiences } from '../data/experience';
 
   .tag {
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     background: var(--accent-glow);
     color: var(--accent);
-    padding: 0.25rem 0.75rem;
+    padding: 0.2rem 0.6rem;
     border-radius: var(--radius);
   }
 
   @media (max-width: 768px) {
-    .exp-card {
-      padding: 1.25rem 1.25rem;
+    .exp-summary {
+      grid-template-columns: 50px 1fr 1.25rem;
+      grid-template-rows: auto auto;
+      column-gap: 0.5rem;
+    }
+    .exp-year { grid-row: 1; grid-column: 1; }
+    .exp-chevron { grid-row: 1; grid-column: 3; }
+    .exp-company { grid-row: 1; grid-column: 2; }
+    .exp-divider, .exp-project { display: none; }
+    .exp-summary-text {
+      grid-row: 2;
+      grid-column: 1 / -1;
+      white-space: normal;
+    }
+    .exp-body {
+      padding-left: 0;
     }
   }
 </style>
