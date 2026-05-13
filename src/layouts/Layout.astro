@@ -16,6 +16,58 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const personId = `${Astro.site}#person`;
+const websiteId = `${Astro.site}#website`;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: 'Anes Kurtovic',
+      url: Astro.site?.toString(),
+      jobTitle: 'Software Engineer',
+      description:
+        'Software Engineer specializing in .NET microservices and full-stack development.',
+      sameAs: [
+        'https://github.com/aneskurtovic',
+        'https://linkedin.com/in/anes-kurtovic-b50040135',
+      ],
+      email: 'mailto:anes.kurtovic@gmail.com',
+      knowsAbout: [
+        '.NET',
+        'C#',
+        'Microservices',
+        'Software Architecture',
+        'Domain-Driven Design',
+        'Event Sourcing',
+        'React',
+        'TypeScript',
+      ],
+      worksFor: {
+        '@type': 'Organization',
+        name: 'Roko Labs',
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Sarajevo',
+        addressCountry: 'BA',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      url: Astro.site?.toString(),
+      name: 'Anes Kurtovic — Software Engineer',
+      description:
+        'Portfolio of Anes Kurtovic — Software Engineer specializing in .NET, microservices, and full-stack development.',
+      publisher: { '@id': personId },
+      inLanguage: 'en',
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -44,6 +96,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+
+    <!-- Structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
