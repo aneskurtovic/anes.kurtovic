@@ -24,7 +24,7 @@ export const experiences: Experience[] = [
     ],
     shortBullets: [
       'Backend services powering an enterprise workforce-management platform (.NET Web API).',
-      'Owned WPF desktop tooling — UI components, defect resolution, and feature delivery.',
+      'Led modernization of mission-critical WPF desktop tools — reducing technical debt and streamlining UI component delivery for enterprise-scale workforce management.',
       'Tuned SQL Server schemas and high-volume queries via LLBGen ORM.',
       'Angular UI features and integrations with multiple third-party systems.',
     ],

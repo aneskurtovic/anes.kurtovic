@@ -20,12 +20,13 @@ export const projects: Project[] = [
     featured: true,
     highlights: [
       'Real-time multiplayer for 2–6 players over SignalR WebSockets',
+      'Engineered a robust state-syncing engine using SignalR to handle real-time concurrency for up to 6 players with a zero-latency feel',
       '6 elemental affinities (Fire, Water, Air, Earth, Lightning, Nature) — each with a unique passive ability',
       '4 Chaos Cards drawn mid-game: Reverse, Blockade, Double Down, Swap',
       'Public lobbies + private rooms with 6-character invite codes',
       'Local pass-and-play mode and online play with leaderboard',
       'Reconnection support and configurable turn timers',
-      'Built solo with AI-assisted workflow',
+      'Used Claude Code to automate boilerplate generation, allowing focus on complex game logic and WebSocket stability',
     ],
   },
   {
