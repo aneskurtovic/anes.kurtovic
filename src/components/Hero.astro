@@ -308,6 +308,8 @@ const current = experiences[0];
     color: var(--text-muted);
     max-width: 500px;
     margin-bottom: 2rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 
   .hero-actions {
@@ -466,6 +468,14 @@ const current = experiences[0];
 
     .terminal-body {
       font-size: 0.7rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-x: visible;
+    }
+
+    .t-tech {
+      display: inline-block;
+      padding-left: 0;
     }
   }
 
