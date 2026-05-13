@@ -8,3 +8,9 @@ dist/
 Thumbs.db
 docs/plans/
 .claude/
+
+# Local dev artifacts (verification screenshots, MCP browser temp)
+.playwright-mcp/
+/verify-*.png
+/blog-*.png
+/homepage-*.png
