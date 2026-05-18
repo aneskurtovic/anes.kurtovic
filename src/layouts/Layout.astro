@@ -1,4 +1,7 @@
 ---
+import { getImage } from 'astro:assets';
+import profileImg from '../assets/anes-kurtovic.png';
+
 interface Props {
   title?: string;
   description?: string;
@@ -16,6 +19,8 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const optimizedHeroImg = await getImage({ src: profileImg, width: 1200, quality: 75, format: 'webp' });
 
 const personId = `${Astro.site}#person`;
 const websiteId = `${Astro.site}#website`;
@@ -78,6 +83,7 @@ const structuredData = {
     <meta name="description" content={description} />
     <meta name="author" content="Anes Kurtovic" />
     <link rel="canonical" href={canonicalURL.href} />
+    <link rel="preload" as="image" href={optimizedHeroImg.src} type="image/webp" fetchpriority="high" />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
