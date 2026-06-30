@@ -1,0 +1,253 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('projects', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const projectSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['CreativeWork', 'SoftwareApplication'],
+  name: d.title,
+  headline: d.title,
+  description: d.summary,
+  url: canonical,
+  applicationCategory: 'WebApplication',
+  author: { '@id': `${Astro.site}#person` },
+  creator: { '@id': `${Astro.site}#person` },
+  keywords: d.stack.join(', '),
+  image: new URL('/og-image.png', Astro.site).href,
+  ...(d.liveUrl ? { sameAs: d.repoUrl ? [d.liveUrl, d.repoUrl] : [d.liveUrl] } : {}),
+};
+---
+
+<Layout
+  title={`${d.title} — Case Study | Anes Kurtovic`}
+  description={d.summary}
+  ogType="article"
+  jsonLd={projectSchema}
+>
+  <Nav isBlog />
+  <main id="main" class="project-page">
+    <div class="project-column">
+      <a href="/#projects" class="back-link">&larr; Back to projects</a>
+
+      <article>
+        <header class="project-header">
+          <p class="project-kicker">{d.year} <span class="sep">·</span> {d.role}</p>
+          <h1 class="project-title">{d.title}</h1>
+          <p class="project-subtitle">{d.subtitle}</p>
+
+          <div class="project-actions">
+            {d.liveUrl && (
+              <a href={d.liveUrl} target="_blank" rel="noopener noreferrer" class="proj-cta proj-cta--primary">
+                View live <span aria-hidden="true">↗</span>
+              </a>
+            )}
+            {d.repoUrl && (
+              <a href={d.repoUrl} target="_blank" rel="noopener noreferrer" class="proj-cta">
+                Source <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
+
+          {d.metrics.length > 0 && (
+            <ul class="project-metrics">
+              {d.metrics.map((m) => (
+                <li>
+                  <span class="m-value">{m.value}</span>
+                  <span class="m-label">{m.label}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div class="project-stack">
+            {d.stack.map((s) => <span class="tag">{s}</span>)}
+          </div>
+        </header>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style is:global>
+  @import '../../styles/prose.css';
+</style>
+
+<style>
+  .project-page {
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+    min-height: 100vh;
+  }
+
+  .project-column {
+    max-width: 78ch;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .project-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .project-kicker .sep {
+    opacity: 0.5;
+  }
+
+  .project-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .proj-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .proj-cta:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .proj-cta--primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  .proj-cta--primary:hover {
+    color: var(--bg);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .project-metrics {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .project-metrics li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  .m-value {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+
+  .m-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background: var(--accent-glow);
+    color: var(--accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius);
+  }
+
+  @media (max-width: 768px) {
+    .project-title {
+      font-size: 1.9rem;
+    }
+
+    .project-metrics {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    .project-metrics li {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0.6rem;
+      text-align: left;
+    }
+  }
+</style>

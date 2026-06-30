@@ -7,6 +7,10 @@ export interface Project {
   live?: string;
   featured?: boolean;
   highlights?: string[];
+  /** Slug of the matching case study in src/content/projects (enables "Read case study"). */
+  slug?: string;
+  /** Render under the "Earlier work" subgroup instead of the main list. */
+  archived?: boolean;
 }
 
 export const projects: Project[] = [
@@ -18,6 +22,7 @@ export const projects: Project[] = [
     tags: ['.NET 9', 'SignalR', 'React 19', 'TypeScript', 'Tailwind CSS', 'Docker', 'Caddy'],
     live: 'https://ludo-nexus.com',
     featured: true,
+    slug: 'ludo-nexus',
     highlights: [
       'Architected a real-time multiplayer game platform for 2–6 players on .NET 9 + SignalR WebSockets — low-latency gameplay with resilient reconnect handling',
       'Designed a modular rules engine: elemental affinities and Chaos Card mechanics expand gameplay without coupling core systems',
@@ -25,7 +30,7 @@ export const projects: Project[] = [
       '4 Chaos Cards drawn mid-game: Reverse, Blockade, Double Down, Swap',
       'Complete multiplayer flow — public lobbies, private rooms with 6-character invite codes, global leaderboard, configurable turn timers, and local pass-and-play',
       'Stack: React 19 + TypeScript + Tailwind frontend, containerized with Docker, served via Caddy for production deployment',
-      'Used Claude Code to automate boilerplate generation, freeing focus for complex game logic and WebSocket stability',
+      'AI-assisted boilerplate generation; hand-authored the authoritative game-state engine and WebSocket reconnection logic',
     ],
   },
   {
@@ -36,6 +41,7 @@ export const projects: Project[] = [
     tags: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     github: 'https://github.com/aneskurtovic/Helifilm',
     live: 'https://aneskurtovic.github.io/Helifilm/',
+    slug: 'helifilm',
     highlights: [
       'Cinematic landing page with full-bleed aerial reel and service breakdown',
       'Static-export Next.js build deployed via GitHub Pages — zero hosting cost',
@@ -50,6 +56,7 @@ export const projects: Project[] = [
     tags: ['HTML', 'CSS', 'JavaScript'],
     github: 'https://github.com/aneskurtovic/MMA-Klub-Ratnik',
     live: 'https://aneskurtovic.github.io/MMA-Klub-Ratnik/',
+    slug: 'mma-klub-ratnik',
     highlights: [
       'Bilingual (Bosnian / English) site with persistent language switcher',
       'Weekly training schedule, FAQ, and lead-capture contact form',
@@ -63,6 +70,7 @@ export const projects: Project[] = [
       'Virtual electronic music festival application with a .NET 6 Web API backend, Flutter mobile client, WinForms desktop client, and ASP.NET MVC web client.',
     tags: ['.NET 6 Web API', 'Flutter', 'WinForms', 'ASP.NET MVC'],
     github: 'https://github.com/aneskurtovic/Apocalypse',
+    archived: true,
     highlights: [
       'Single .NET 6 Web API powering three independent clients',
       'Flutter mobile + WinForms desktop + ASP.NET MVC web — one backend, three UX surfaces',
@@ -76,6 +84,7 @@ export const projects: Project[] = [
       'Quiz application with a RESTful API built with .NET Core 3.1 and a Single Page Application frontend built with Angular.',
     tags: ['.NET Core 3.1', 'Angular', 'REST API'],
     github: 'https://github.com/aneskurtovic/Quizard.API',
+    archived: true,
     highlights: [
       '.NET Core 3.1 REST API consumed by an Angular SPA',
       'Early-career project — first end-to-end SPA + API stack',
