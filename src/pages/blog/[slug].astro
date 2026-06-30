@@ -31,6 +31,21 @@ const formattedDate = post.data.date.toLocaleDateString('en-US', {
 // Reading time estimate
 const words = post.body?.split(/\s+/).length ?? 0;
 const readingTime = Math.max(1, Math.ceil(words / 200));
+
+const blogPostingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  dateModified: post.data.date.toISOString(),
+  author: { '@id': `${Astro.site}#person` },
+  publisher: { '@id': `${Astro.site}#person` },
+  image: new URL('/og-image.png', Astro.site).href,
+  url: new URL(Astro.url.pathname, Astro.site).href,
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+  keywords: post.data.tags.join(', '),
+};
 ---
 
 <Layout
@@ -39,6 +54,7 @@ const readingTime = Math.max(1, Math.ceil(words / 200));
   ogType="article"
   publishedDate={post.data.date.toISOString()}
   tags={post.data.tags}
+  jsonLd={blogPostingSchema}
 >
   <Nav isBlog />
   <main id="main" class="post-page">

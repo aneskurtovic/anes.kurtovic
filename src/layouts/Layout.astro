@@ -6,19 +6,24 @@ interface Props {
   title?: string;
   description?: string;
   ogType?: string;
+  ogImage?: string;
   publishedDate?: string;
   tags?: string[];
+  jsonLd?: Record<string, unknown>;
 }
 
 const {
   title = 'Anes Kurtovic | Software Engineer',
   description = 'Portfolio of Anes Kurtovic — Software Engineer specializing in .NET, microservices, and full-stack development.',
   ogType = 'website',
+  ogImage = '/og-image.png',
   publishedDate,
   tags,
+  jsonLd,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site).href;
 
 const optimizedHeroImg = await getImage({ src: profileImg, width: 1200, quality: 75, format: 'webp' });
 
@@ -33,6 +38,7 @@ const structuredData = {
       '@id': personId,
       name: 'Anes Kurtovic',
       url: Astro.site?.toString(),
+      image: new URL('/og-image.png', Astro.site).href,
       jobTitle: 'Software Engineer',
       description:
         'Software Engineer specializing in .NET microservices and full-stack development.',
@@ -83,7 +89,9 @@ const structuredData = {
     <meta name="description" content={description} />
     <meta name="author" content="Anes Kurtovic" />
     <link rel="canonical" href={canonicalURL.href} />
-    <link rel="preload" as="image" href={optimizedHeroImg.src} type="image/webp" fetchpriority="high" />
+    {canonicalURL.pathname === '/' && (
+      <link rel="preload" as="image" href={optimizedHeroImg.src} type="image/webp" fetchpriority="high" />
+    )}
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
@@ -92,19 +100,25 @@ const structuredData = {
     <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:site_name" content="Anes Kurtovic" />
     <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
     {publishedDate && <meta property="article:published_time" content={publishedDate} />}
     {tags && tags.map((tag) => <meta property="article:tag" content={tag} />)}
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
 
     <!-- Structured data -->
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
