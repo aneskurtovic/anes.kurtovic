@@ -117,8 +117,8 @@ const structuredData = {
     <title>{title}</title>
 
     <!-- Structured data -->
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
