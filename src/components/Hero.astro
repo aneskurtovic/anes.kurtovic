@@ -43,22 +43,27 @@ const current = experiences[0];
   <div class="container hero-grid">
     <!-- Left column: existing text content -->
     <div class="hero-content">
-      <p class="hero-animate greeting">Hi, my name is</p>
+      <p class="hero-animate greeting">// backend &amp; platform engineer</p>
       <h1 class="hero-animate name">Anes Kurtovic</h1>
       <p class="hero-animate subtitle">
         Software Engineer <span class="sep">|</span> Backend &amp; Platform Engineering
         <span class="sep">|</span> .NET, Cloud-Native, Real-Time Systems
       </p>
       <p class="hero-animate trust-line">
-        Currently at <span class="trust-current">{current.company}</span>
+        Currently at <span class="trust-current">{current.company}</span> <span class="sep">·</span> 6+ years shipping production software
       </p>
       <p class="hero-animate tagline">
-        I build scalable backend systems and full-stack applications.
+        I build and modernize .NET backends, real-time systems, and cloud-native
+        services that teams actually run in production.
       </p>
       <div class="hero-animate hero-actions">
-        <a href="/Anes_Kurtovic_2025.pdf" target="_blank" rel="noopener noreferrer" class="resume-btn">
-          Download Resume
-        </a>
+        <div class="cta-row">
+          <a href="#projects" class="btn btn-primary">View work</a>
+          <a href="#contact" class="btn btn-secondary">Get in touch</a>
+          <a href="/Anes_Kurtovic_2025.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+            Résumé <span aria-hidden="true">↗</span>
+          </a>
+        </div>
         <div class="social-links">
           {socialLinks.map((link) => (
             <a
@@ -89,7 +94,7 @@ const current = experiences[0];
         <pre class="terminal-body"><code><span class="t-prompt">$</span> cat ~/journey.log
 
 <span class="t-year">[2021]</span> <span class="t-bar-mid">▓▓</span> Tacta — CoBen
-<span class="t-tech">.NET · Angular · SQL Server · Domain Driven Design · Event Sourcing</span>
+<span class="t-tech">.NET · Angular · SQL Server · Domain-Driven Design · Event Sourcing</span>
 
 <span class="t-year">[2022]</span> <span class="t-bar-mid">▓▓</span> Roko Labs — FracStream
 <span class="t-tech">.NET · React · MongoDB + PostgreSQL · AWS · Auth0</span>
@@ -328,27 +333,59 @@ const current = experiences[0];
 
   .hero-actions {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 1.5rem;
   }
 
-  .resume-btn {
+  .cta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+  }
+
+  .btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.7rem 1.5rem;
-    background: var(--accent);
-    color: var(--bg);
+    gap: 0.4rem;
+    padding: 0.7rem 1.4rem;
     font-weight: 600;
     font-size: 0.95rem;
     border-radius: var(--radius);
-    transition: transform 0.2s, box-shadow 0.2s;
-    animation: pulse-glow 3s ease-in-out infinite;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
   }
 
-  .resume-btn:hover {
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 0 25px var(--accent-glow), 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    padding: 0.7rem 0.6rem;
+  }
+
+  .btn-ghost:hover {
+    color: var(--accent);
   }
 
   .social-links {

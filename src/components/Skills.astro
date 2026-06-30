@@ -8,8 +8,8 @@ import { skills } from '../data/skills';
     <SectionHeading title="Skills" />
     <div class="skills-grid reveal-stagger">
       {skills.map((category) => (
-        <div class="skill-card spotlight">
-          <h3>{category.name}</h3>
+        <div class={`skill-card spotlight${category.featured ? ' skill-card--featured' : ''}`}>
+          <h3>{category.name}{category.featured && <span class="core-badge">primary stack</span>}</h3>
           <div class="skill-tags">
             {category.items.map((item) => (
               <span class="skill-tag">{item}</span>
@@ -42,10 +42,35 @@ import { skills } from '../data/skills';
   }
 
   .skill-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     font-family: var(--font-mono);
     font-size: 0.95rem;
     color: var(--accent);
     margin-bottom: 1rem;
+  }
+
+  /* Featured "Core" card spans the full row and reads as the primary stack */
+  .skill-card--featured {
+    grid-column: 1 / -1;
+    border-color: rgba(56, 189, 248, 0.35);
+    background: linear-gradient(180deg, rgba(56, 189, 248, 0.06), var(--bg-card) 60%);
+  }
+
+  .skill-card--featured .skill-tag {
+    border-color: rgba(56, 189, 248, 0.3);
+    color: var(--text);
+  }
+
+  .core-badge {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
   }
 
   .skill-tags {

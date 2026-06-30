@@ -1,27 +1,38 @@
 export interface SkillCategory {
   name: string;
   items: string[];
+  featured?: boolean;
 }
 
 export const skills: SkillCategory[] = [
   {
-    name: 'Languages & Backend',
+    name: 'Core',
+    featured: true,
     items: [
       'C#',
+      '.NET (Core / 8 / 9)',
+      'ASP.NET Web API',
+      'SQL Server',
+      'REST & Microservices',
+      'SignalR / Real-Time',
+      'AWS',
+      'Domain-Driven Design',
+      'Event Sourcing',
+    ],
+  },
+  {
+    name: 'Languages & Frameworks',
+    items: [
       'TypeScript',
       'JavaScript',
       'SQL',
       'C++',
       'Python',
-      '.NET Framework',
-      '.NET Core',
-      'ASP.NET Web API',
-      'ASP.NET MVC',
+      'React',
+      'Angular',
+      'Vue.js',
+      'Flutter',
     ],
-  },
-  {
-    name: 'Frontend',
-    items: ['React', 'Angular', 'VueJS', 'Flutter', 'WinForms'],
   },
   {
     name: 'Databases',
@@ -29,11 +40,11 @@ export const skills: SkillCategory[] = [
   },
   {
     name: 'Cloud & DevOps',
-    items: ['AWS', 'Azure', 'Jenkins', 'Git', 'Docker'],
+    items: ['AWS', 'Azure', 'Docker', 'Jenkins CI/CD', 'Git'],
   },
   {
-    name: 'Concepts',
-    items: ['REST API', 'Microservices', 'DDD', 'Event Sourcing', 'TDD', 'Ports & Adapters'],
+    name: 'Practices',
+    items: ['Clean Architecture', 'TDD', 'Ports & Adapters', 'ASP.NET MVC', 'WPF / WinForms'],
   },
   {
     name: 'AI-Augmented Development',

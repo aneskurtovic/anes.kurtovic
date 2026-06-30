@@ -38,8 +38,14 @@ const formspreeEndpoint = 'https://formspree.io/f/mwvyzryl';
       </div>
       <div class="contact-info">
         <p class="contact-intro">
-          Have a question or want to work together? Feel free to reach out.
+          Hiring for a backend/platform role, or need a .NET system modernized? Send the
+          problem, rough timeline, and any links — I usually reply within 24–48 hours.
         </p>
+        <ul class="contact-fit">
+          <li>Backend &amp; platform engineering roles</li>
+          <li>.NET modernization &amp; SQL-heavy systems</li>
+          <li>Real-time (SignalR) &amp; AWS / cloud-native work</li>
+        </ul>
         <ul class="contact-list">
           <li>
             <a href={`mailto:${contactInfo.email}`} class="contact-item">
@@ -254,6 +260,29 @@ const formspreeEndpoint = 'https://formspree.io/f/mwvyzryl';
     color: var(--text-muted);
     font-size: 1.05rem;
     line-height: 1.7;
+  }
+
+  .contact-fit {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .contact-fit li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+  }
+
+  .contact-fit li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
   }
 
   .contact-list {
