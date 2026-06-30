@@ -29,15 +29,22 @@ const logoHref = isBlog ? '/' : '#hero';
 <nav class={`nav${isBlog ? ' scrolled' : ''}`} id="nav">
   <div class="container nav-inner">
     <a href={logoHref} class="nav-logo">AK</a>
+    <button class="nav-close" id="nav-close" aria-label="Close menu" type="button">
+      <Icon name="x" size={24} />
+    </button>
     <ul class="nav-links" id="nav-links">
-      <button class="nav-close" id="nav-close" aria-label="Close menu" type="button">
-        <Icon name="x" size={24} />
-      </button>
       {navItems.map((item) => (
         <li><a href={item.href} class={`nav-link${item.label === 'Blog' ? ' nav-link--blog' : ''}`}>{item.label}</a></li>
       ))}
     </ul>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" type="button">
+    <button
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-label="Open menu"
+      aria-controls="nav-links"
+      aria-expanded="false"
+      type="button"
+    >
       <Icon name="menu" size={24} />
     </button>
   </div>
@@ -137,9 +144,10 @@ const logoHref = isBlog ? '/' : '#hero';
   .nav-close {
     display: none;
     color: var(--text);
-    position: absolute;
+    position: fixed;
     top: 1rem;
     right: 1rem;
+    z-index: 102;
     background: none;
     border: none;
     cursor: pointer;
@@ -178,6 +186,7 @@ const logoHref = isBlog ? '/' : '#hero';
       width: 70%;
       max-width: 300px;
       height: 100vh;
+      height: 100dvh;
       background: var(--bg-card);
       flex-direction: column;
       padding: 5rem 2rem 2rem;
@@ -192,7 +201,7 @@ const logoHref = isBlog ? '/' : '#hero';
       transform: translateX(0);
     }
 
-    .nav-close {
+    .nav-close.open {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -200,6 +209,9 @@ const logoHref = isBlog ? '/' : '#hero';
 
     .nav-link {
       font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      min-height: 44px;
     }
   }
 </style>

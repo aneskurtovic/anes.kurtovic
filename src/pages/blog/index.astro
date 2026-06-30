@@ -11,7 +11,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
 <Layout title="Blog | Anes Kurtovic" description="Articles on software engineering, architecture, and developer tooling.">
   <Nav isBlog />
-  <main class="blog-page">
+  <main id="main" class="blog-page">
     <div class="container">
       <SectionHeading title="Blog" />
 

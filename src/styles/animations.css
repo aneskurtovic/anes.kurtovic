@@ -144,10 +144,15 @@
 
 /* ── Reduced-motion guard ── */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .blob,
   .float-shape,
   .exp-dot,
   .resume-btn,
+  .cursor,
   .tag:hover {
     animation: none !important;
   }

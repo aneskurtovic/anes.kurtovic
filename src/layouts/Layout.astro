@@ -115,6 +115,7 @@ const structuredData = {
     />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="scroll-progress" aria-hidden="true"></div>
     <slot />
 
@@ -128,12 +129,18 @@ const structuredData = {
         const openMenu = () => {
           links?.classList.add('open');
           backdrop?.classList.add('open');
+          close?.classList.add('open');
           document.body.style.overflow = 'hidden';
+          toggle?.setAttribute('aria-expanded', 'true');
+          close?.focus();
         };
-        const closeMenu = () => {
+        const closeMenu = ({ restoreFocus = true } = {}) => {
           links?.classList.remove('open');
           backdrop?.classList.remove('open');
+          close?.classList.remove('open');
           document.body.style.overflow = '';
+          toggle?.setAttribute('aria-expanded', 'false');
+          if (restoreFocus) toggle?.focus();
         };
         toggle?.addEventListener('click', () => {
           if (links?.classList.contains('open')) closeMenu();
@@ -145,7 +152,7 @@ const structuredData = {
           if (e.key === 'Escape' && links?.classList.contains('open')) closeMenu();
         });
         links?.querySelectorAll('a').forEach((a) =>
-          a.addEventListener('click', closeMenu)
+          a.addEventListener('click', () => closeMenu({ restoreFocus: false }))
         );
 
         // Navbar glassmorphism + scroll progress on scroll
