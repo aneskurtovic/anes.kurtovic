@@ -13,7 +13,11 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <Nav isBlog />
   <main id="main" class="blog-page">
     <div class="container">
-      <SectionHeading title="Blog" />
+      <SectionHeading title="Blog" as="h1" />
+      <p class="blog-intro">
+        Notes on .NET, software architecture, microservices, and the tooling I use
+        to ship and modernize production systems.
+      </p>
 
       {posts.length === 0 && (
         <p class="empty">No posts yet. Check back soon!</p>
@@ -52,6 +56,14 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     padding-top: 6rem;
     padding-bottom: 4rem;
     min-height: 100vh;
+  }
+
+  .blog-intro {
+    max-width: 60ch;
+    margin: -1.75rem auto 2.75rem;
+    text-align: center;
+    color: var(--text-muted);
+    line-height: 1.7;
   }
 
   .empty {

@@ -23,7 +23,10 @@ export default defineConfig({
   site: 'https://aneskurtovic.com',
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/arena'),
+      filter: (page) =>
+        !page.includes('/arena') &&
+        !page.includes('/404') &&
+        !page.includes('/rss.xml'),
       changefreq: 'monthly',
       priority: 0.7,
       serialize(item) {

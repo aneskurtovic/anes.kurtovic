@@ -18,7 +18,6 @@ const d = entry.data;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const projectSchema = {
-  '@context': 'https://schema.org',
   '@type': ['CreativeWork', 'SoftwareApplication'],
   name: d.title,
   headline: d.title,
@@ -31,13 +30,27 @@ const projectSchema = {
   image: new URL('/og-image.png', Astro.site).href,
   ...(d.liveUrl ? { sameAs: d.repoUrl ? [d.liveUrl, d.repoUrl] : [d.liveUrl] } : {}),
 };
+
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: 'Projects', item: new URL('/#projects', Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: d.title, item: canonical },
+  ],
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [projectSchema, breadcrumbSchema],
+};
 ---
 
 <Layout
   title={`${d.title} — Case Study | Anes Kurtovic`}
   description={d.summary}
   ogType="article"
-  jsonLd={projectSchema}
+  jsonLd={jsonLd}
 >
   <Nav isBlog />
   <main id="main" class="project-page">
