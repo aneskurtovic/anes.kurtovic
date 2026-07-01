@@ -21,6 +21,26 @@
       <p class="credit">Sprites: "Tiny RPG Character Asset Pack" — used with thanks.</p>
     </main>
 
+    <script>
+      // TEMPORARY proof — replaced by the engine in Task 5.
+      const stage = document.getElementById('arena-stage');
+      function proof(side, state, x, bottom) {
+        const el = document.createElement('div');
+        el.className = `unit ${side}`;
+        el.style.bottom = `${bottom}px`;
+        el.style.transform = `translateX(${x}px) scale(1.8)`;
+        const sprite = document.createElement('div');
+        sprite.className = `sprite st-${state}`;
+        sprite.style.backgroundImage = `url("/arena/sprites/${side}-${state}.png")`;
+        el.appendChild(sprite);
+        stage.appendChild(el);
+      }
+      proof('soldier', 'walk', 120, 40);
+      proof('soldier', 'attack', 260, 40);
+      proof('orc', 'walk', window.innerWidth - 200, 40);
+      proof('orc', 'attack', window.innerWidth - 340, 40);
+    </script>
+
     <style is:global>
       @import '../styles/global.css';
 
@@ -58,6 +78,47 @@
         position: absolute;
         inset: 0;
         z-index: 1;
+      }
+
+      /* ---- Sprite units (elements are created in JS, so styles must be global) ---- */
+      .unit {
+        position: absolute;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        transform-origin: bottom center;
+        image-rendering: pixelated;
+        will-change: transform;
+      }
+
+      .sprite {
+        width: 100px;
+        height: 100px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        image-rendering: pixelated;
+      }
+
+      /* Orcs face left (sprites ship facing right). */
+      .unit.orc .sprite {
+        transform: scaleX(-1);
+      }
+
+      @keyframes play4 { from { background-position-x: 0; } to { background-position-x: -400px; } }
+      @keyframes play6 { from { background-position-x: 0; } to { background-position-x: -600px; } }
+      @keyframes play8 { from { background-position-x: 0; } to { background-position-x: -800px; } }
+
+      .sprite.st-idle   { animation: play6 0.9s steps(6) infinite; }
+      .sprite.st-walk   { animation: play8 0.7s steps(8) infinite; }
+      .sprite.st-attack { animation: play6 0.52s steps(6) 1; }
+      .sprite.st-hurt   { animation: play4 0.3s steps(4) 1; }
+      .sprite.st-death  { animation: play4 0.6s steps(4) 1 forwards; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .sprite {
+          animation: none !important;
+          background-position-x: 0 !important;
+        }
       }
 
       .back-btn {
