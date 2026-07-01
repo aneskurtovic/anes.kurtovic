@@ -14,3 +14,9 @@ docs/plans/
 /verify-*.png
 /blog-*.png
 /homepage-*.png
+
+# Cloudflare Worker — generated / local-only, never commit
+worker/package-lock.json
+.wrangler/
+.dev.vars
+*.tsbuildinfo
