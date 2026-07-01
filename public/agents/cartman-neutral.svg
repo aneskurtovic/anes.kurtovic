@@ -1,32 +1,57 @@
-<svg viewBox="0 0 256 256" width="256" height="256" xmlns="http://www.w3.org/2000/svg">
-  <!-- Dark rounded background -->
-  <rect width="256" height="256" rx="24" fill="#12121a"/>
+  <svg viewBox="0 0 512 512" width="512" height="512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cartman neutral avatar">
 
-  <!-- Face (pale peach, fills most of square) -->
-  <circle cx="128" cy="140" r="80" fill="#f1c9a5"/>
+<defs>
+  <radialGradient id="bgGlow" cx="50%" cy="40%" r="70%">
+    <stop offset="0%" stop-color="#2a2634"/>
+    <stop offset="55%" stop-color="#141420"/>
+    <stop offset="100%" stop-color="#080911"/>
+  </radialGradient>
+  <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
+    <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#000000" flood-opacity="0.45"/>
+  </filter>
+  <filter id="lineShadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#000000" flood-opacity="0.25"/>
+  </filter>
+</defs>
 
-  <!-- Red jacket collar (bottom) -->
-  <path d="M 70 200 L 100 215 L 156 215 L 186 200" fill="#c0392b"/>
+    <rect width="512" height="512" rx="56" fill="url(#bgGlow)"/>
 
-  <!-- Beanie hat (teal/turquoise) -->
-  <rect x="60" y="55" width="136" height="50" rx="20" fill="#4bbfae"/>
+    <g filter="url(#softShadow)">
+      <path d="M103 450 C114 394 163 359 256 359 C349 359 398 394 409 450 L409 512 L103 512 Z" fill="#c9302c"/>
+      <path d="M150 422 C187 392 219 382 256 382 C293 382 325 392 362 422 L329 512 L183 512 Z" fill="#9d1f22" opacity="0.9"/>
+      <path d="M198 392 L256 463 L314 392 C294 381 274 376 256 376 C238 376 218 381 198 392 Z" fill="#f2ce2d" opacity="0.92"/>
+      <path d="M177 400 C196 383 222 374 256 374 C290 374 316 383 335 400" stroke="#741918" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.45"/>
+    </g>
 
-  <!-- Yellow brim band -->
-  <rect x="60" y="95" width="136" height="12" fill="#f2d02c"/>
+    <g filter="url(#softShadow)">
+      <ellipse cx="256" cy="266" rx="145" ry="149" fill="#f0c8a6" stroke="#2b1b1e" stroke-width="9"/>
+      <ellipse cx="209" cy="265" rx="48" ry="56" fill="#f6d5ba" opacity="0.38"/>
+      <ellipse cx="307" cy="275" rx="56" ry="70" fill="#d99d7e" opacity="0.12"/>
 
-  <!-- Yellow pom-pom on top -->
-  <circle cx="128" cy="50" r="9" fill="#f2d02c"/>
+      <path d="M106 186 C111 114 169 67 256 67 C343 67 401 114 406 186 L395 213 C351 199 306 194 256 194 C206 194 161 199 117 213 Z" fill="#31b5ae" stroke="#201a25" stroke-width="9"/>
+      <path d="M129 119 C165 80 220 64 281 72 C228 80 184 102 156 136 C145 150 137 166 132 186 L106 186 C108 159 116 137 129 119 Z" fill="#74d4cf" opacity="0.38"/>
+      <path d="M101 188 C146 173 198 166 256 166 C314 166 366 173 411 188 L405 225 C358 211 309 205 256 205 C203 205 154 211 107 225 Z" fill="#f0ce2c" stroke="#201a25" stroke-width="8"/>
+      <path d="M113 191 C158 182 205 178 256 178 C307 178 354 182 399 191" stroke="#fff38b" stroke-width="6" opacity="0.5" fill="none" stroke-linecap="round"/>
+      <circle cx="256" cy="57" r="29" fill="#f0ce2c" stroke="#201a25" stroke-width="8"/>
+      <circle cx="246" cy="47" r="8" fill="#fff38b" opacity="0.7"/>
+    </g>
 
-  <!-- Eyes (white circles with black pupils, close together) -->
-  <circle cx="110" cy="130" r="13" fill="white"/>
-  <circle cx="146" cy="130" r="13" fill="white"/>
-  <circle cx="110" cy="130" r="8" fill="black"/>
-  <circle cx="146" cy="130" r="8" fill="black"/>
+    <g filter="url(#lineShadow)">
+      <ellipse cx="214" cy="266" rx="32" ry="38" fill="#fbfbfb" stroke="#201a25" stroke-width="6"/>
+      <ellipse cx="298" cy="266" rx="32" ry="38" fill="#fbfbfb" stroke="#201a25" stroke-width="6"/>
+      <circle cx="218" cy="272" r="10" fill="#111111"/>
+      <circle cx="294" cy="272" r="10" fill="#111111"/>
+      <circle cx="222" cy="268" r="3" fill="#ffffff"/>
+      <circle cx="298" cy="268" r="3" fill="#ffffff"/>
+      <path d="M187 226 C205 214 224 215 240 226" stroke="#21181f" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M272 226 C288 215 307 214 325 226" stroke="#21181f" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M246 312 C255 318 265 318 274 312" stroke="#a9755e" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.45"/>
 
-  <!-- Eyebrows (small) -->
-  <path d="M 103 115 Q 110 110 117 115" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <path d="M 139 115 Q 146 110 153 115" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M226 348 C244 357 268 357 286 348" stroke="#7b3f2f" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M230 346 C248 350 266 350 282 346" stroke="#c0715c" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.55"/>
 
-  <!-- Neutral mouth (small short line) -->
-  <line x1="115" y1="170" x2="141" y2="170" stroke="#8a5a3a" stroke-width="2" stroke-linecap="round"/>
-</svg>
+      <ellipse cx="166" cy="330" rx="19" ry="11" fill="#dc7f77" opacity="0.25"/>
+      <ellipse cx="346" cy="330" rx="19" ry="11" fill="#dc7f77" opacity="0.25"/>
+    </g>
+
+  </svg>

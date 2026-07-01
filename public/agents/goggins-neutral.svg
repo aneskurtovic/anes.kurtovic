@@ -1,26 +1,77 @@
-<svg viewBox="0 0 256 256" width="256" height="256" xmlns="http://www.w3.org/2000/svg">
-  <!-- Dark rounded background -->
-  <rect width="256" height="256" rx="24" fill="#12121a"/>
+  <svg viewBox="0 0 512 512" width="512" height="512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Goggins neutral avatar">
 
-  <!-- Red intensity glow (semi-transparent) behind head -->
-  <circle cx="128" cy="128" r="95" fill="#ff4444" opacity="0.12"/>
+<defs>
+  <radialGradient id="bgGlow" cx="50%" cy="40%" r="70%">
+    <stop offset="0%" stop-color="#2a2634"/>
+    <stop offset="55%" stop-color="#141420"/>
+    <stop offset="100%" stop-color="#080911"/>
+  </radialGradient>
+  <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
+    <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#000000" flood-opacity="0.45"/>
+  </filter>
+  <filter id="lineShadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#000000" flood-opacity="0.25"/>
+  </filter>
+</defs>
 
-  <!-- Head (bald, brown skin) -->
-  <circle cx="128" cy="128" r="80" fill="#6b4a35"/>
+    <rect width="512" height="512" rx="56" fill="url(#bgGlow)"/>
 
-  <!-- Strong jaw -->
-  <rect x="68" y="155" width="120" height="48" rx="16" fill="#6b4a35"/>
+    <defs>
+      <radialGradient id="redAura" cx="50%" cy="43%" r="45%">
+        <stop offset="0%" stop-color="#e2382e" stop-opacity="0.45"/>
+        <stop offset="45%" stop-color="#b41418" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#b41418" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="skinG" x1="120" y1="90" x2="380" y2="430" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#7c432f"/>
+        <stop offset="45%" stop-color="#5b2f23"/>
+        <stop offset="100%" stop-color="#3c1e18"/>
+      </linearGradient>
+      <linearGradient id="skinHi" x1="160" y1="110" x2="250" y2="320" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#b07358" stop-opacity="0.65"/>
+        <stop offset="100%" stop-color="#b07358" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <circle cx="256" cy="243" r="202" fill="url(#redAura)"/>
+    <g opacity="0.35">
+      <path d="M256 66 L272 184 L367 108 L296 210 L421 203 L307 252 L409 326 L286 296 L322 420 L256 310 L190 420 L226 296 L103 326 L205 252 L91 203 L216 210 L145 108 L240 184 Z" fill="#e3442f" opacity="0.22"/>
+      <circle cx="256" cy="246" r="154" fill="none" stroke="#ef4a36" stroke-width="3" opacity="0.4"/>
+    </g>
 
-  <!-- Thick angled dark eyebrows (angry, pointing inward) -->
-  <path d="M 92 98 Q 108 82 124 92" stroke="#1a1a1a" stroke-width="7" fill="none" stroke-linecap="round"/>
-  <path d="M 164 92 Q 148 82 132 98" stroke="#1a1a1a" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <g filter="url(#softShadow)">
+      <path d="M119 459 C139 395 189 361 256 361 C323 361 373 395 393 459 L407 512 L105 512 Z" fill="#242a31"/>
+      <path d="M161 432 C190 398 222 383 256 383 C290 383 322 398 351 432 L330 512 L182 512 Z" fill="#11161c"/>
+      <path d="M198 387 C216 424 237 446 256 452 C275 446 296 424 314 387 C292 376 272 371 256 371 C240 371 220 376 198 387 Z" fill="#5a2f23"/>
+    </g>
 
-  <!-- Eyes (narrowed, intense) -->
-  <ellipse cx="102" cy="118" rx="11" ry="15" fill="white"/>
-  <ellipse cx="154" cy="118" rx="11" ry="15" fill="white"/>
-  <circle cx="102" cy="118" r="7" fill="black"/>
-  <circle cx="154" cy="118" r="7" fill="black"/>
+    <g filter="url(#softShadow)">
+      <path d="M135 229 C137 132 184 71 256 71 C328 71 375 132 377 229 C379 334 326 420 256 420 C186 420 133 334 135 229 Z" fill="url(#skinG)" stroke="#160c0b" stroke-width="9"/>
+      <path d="M176 137 C197 91 238 77 281 86 C223 106 189 157 185 236 C182 308 197 364 232 407 C173 379 145 299 153 215 C156 183 162 157 176 137 Z" fill="url(#skinHi)"/>
+      <path d="M139 244 C110 247 103 289 125 311 C138 324 155 318 161 299" fill="#5b2f23" stroke="#160c0b" stroke-width="7"/>
+      <path d="M373 244 C402 247 409 289 387 311 C374 324 357 318 351 299" fill="#4a241d" stroke="#160c0b" stroke-width="7"/>
+      <path d="M194 104 C215 82 242 73 269 75 C236 86 214 103 199 128" fill="#b57a60" opacity="0.28"/>
+      <path d="M183 302 C192 355 216 390 256 405 C296 390 320 355 329 302" fill="#2b1512" opacity="0.14"/>
+    </g>
 
-  <!-- Neutral mouth (flat firm line) -->
-  <line x1="98" y1="178" x2="158" y2="178" stroke="#3a1f1a" stroke-width="3" stroke-linecap="round"/>
-</svg>
+    <g filter="url(#lineShadow)">
+      <path d="M168 220 C191 202 221 202 239 219" stroke="#130a09" stroke-width="11" fill="none" stroke-linecap="round"/>
+      <path d="M273 219 C291 202 321 202 344 220" stroke="#130a09" stroke-width="11" fill="none" stroke-linecap="round"/>
+      <path d="M180 226 C202 221 222 226 238 240" stroke="#be7d5f" stroke-width="3" opacity="0.28" fill="none" stroke-linecap="round"/>
+      <path d="M274 240 C290 226 310 221 332 226" stroke="#be7d5f" stroke-width="3" opacity="0.24" fill="none" stroke-linecap="round"/>
+      <ellipse cx="211" cy="252" rx="29" ry="18" fill="#fff3e8" opacity="0.88"/>
+      <ellipse cx="301" cy="252" rx="29" ry="18" fill="#fff3e8" opacity="0.88"/>
+      <circle cx="218" cy="252" r="8" fill="#100b0b"/>
+      <circle cx="294" cy="252" r="8" fill="#100b0b"/>
+      <path d="M176 246 C196 234 221 235 241 248" stroke="#100b0b" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <path d="M271 248 C291 235 316 234 336 246" stroke="#100b0b" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <path d="M252 272 C244 303 237 322 226 329 C244 338 267 338 286 328 C276 318 269 300 263 272" fill="#4a231b" stroke="#1a0d0b" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M210 328 C239 340 279 340 309 327" stroke="#1a0d0b" stroke-width="6" fill="none" opacity="0.35" stroke-linecap="round"/>
+
+      <path d="M221 356 C242 366 274 366 295 356" stroke="#3a1712" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M229 352 C246 356 269 356 287 352" stroke="#a45a44" stroke-width="3" fill="none" opacity="0.45" stroke-linecap="round"/>
+
+      <path d="M181 377 C199 414 228 434 256 437 C284 434 313 414 331 377" stroke="#1a0d0b" stroke-width="5" fill="none" opacity="0.32" stroke-linecap="round"/>
+      <path d="M173 184 C206 169 235 164 256 166 C277 164 306 169 339 184" stroke="#c48367" stroke-width="4" opacity="0.24" fill="none" stroke-linecap="round"/>
+    </g>
+
+  </svg>
