@@ -15,6 +15,15 @@
   </head>
   <body>
     <main class="arena">
+      <!-- Layered battlefield backdrop (pure CSS/SVG, no assets) -->
+      <div class="sky" aria-hidden="true"></div>
+      <div class="stars" aria-hidden="true"></div>
+      <div class="moon" aria-hidden="true"></div>
+      <div class="hills hills-far" aria-hidden="true"></div>
+      <div class="hills hills-near" aria-hidden="true"></div>
+      <div class="ground" aria-hidden="true"></div>
+      <div class="fog" aria-hidden="true"></div>
+
       <a class="back-btn" href="/">← Back to portfolio</a>
       <h1 class="sr-only">Orcs vs Soldiers — an endless pixel battle</h1>
       <div id="arena-stage" aria-hidden="true"></div>
@@ -40,29 +49,157 @@
         position: relative;
         width: 100vw;
         height: 100vh;
-        background:
-          radial-gradient(120% 90% at 50% 0%, #1b2438 0%, #0b0e16 60%, #05060a 100%);
+        background: #07060a;
         overflow: hidden;
         font-family: var(--font-mono, monospace);
       }
 
-      /* Ground band the units stand on. */
-      .arena::after {
-        content: '';
+      /* ---- Layered battlefield backdrop ---- */
+
+      /* Dusk war-sky: night at the top smouldering to fire at the horizon. */
+      .sky {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: linear-gradient(
+          180deg,
+          #07060f 0%,
+          #120e26 26%,
+          #241536 46%,
+          #4a2338 60%,
+          #7c3730 70%,
+          #a84a2b 75%,
+          #c8642f 79%
+        );
+      }
+
+      /* Faint starfield in the upper sky (dithered dots). */
+      .stars {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 55%;
+        z-index: 0;
+        background-image:
+          radial-gradient(1px 1px at 12% 20%, rgba(255, 255, 255, 0.7) 50%, transparent),
+          radial-gradient(1px 1px at 28% 44%, rgba(255, 255, 255, 0.5) 50%, transparent),
+          radial-gradient(1px 1px at 47% 12%, rgba(255, 255, 255, 0.6) 50%, transparent),
+          radial-gradient(1px 1px at 63% 34%, rgba(255, 255, 255, 0.45) 50%, transparent),
+          radial-gradient(1px 1px at 78% 18%, rgba(255, 255, 255, 0.6) 50%, transparent),
+          radial-gradient(1px 1px at 88% 40%, rgba(255, 255, 255, 0.4) 50%, transparent),
+          radial-gradient(1px 1px at 38% 28%, rgba(255, 255, 255, 0.5) 50%, transparent);
+        opacity: 0.8;
+      }
+
+      /* Blood moon low over the battlefield. */
+      .moon {
+        position: absolute;
+        top: 14%;
+        right: 16%;
+        width: 116px;
+        height: 116px;
+        border-radius: 50%;
+        z-index: 0;
+        background: radial-gradient(circle at 42% 38%, #ffdca6 0%, #e88a4f 48%, #b23b2b 100%);
+        box-shadow:
+          0 0 60px 18px rgba(214, 96, 52, 0.35),
+          0 0 150px 70px rgba(180, 60, 40, 0.18);
+      }
+
+      /* Two ridgelines silhouetted against the fiery horizon (parallax depth). */
+      .hills {
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 0;
+      }
+
+      .hills-far {
+        bottom: 23%;
+        height: 22%;
+        background: linear-gradient(180deg, #2a1c34 0%, #1c1428 100%);
+        clip-path: polygon(
+          0 100%, 0 58%, 12% 72%, 22% 42%, 34% 64%, 46% 32%,
+          58% 60%, 70% 40%, 82% 62%, 92% 47%, 100% 64%, 100% 100%
+        );
+        opacity: 0.92;
+      }
+
+      .hills-near {
+        bottom: 24%;
+        height: 16%;
+        background: linear-gradient(180deg, #150f21 0%, #0d0916 100%);
+        clip-path: polygon(
+          0 100%, 0 72%, 10% 84%, 20% 56%, 30% 80%, 42% 50%,
+          52% 74%, 64% 52%, 76% 76%, 88% 58%, 100% 74%, 100% 100%
+        );
+      }
+
+      /* Churned battlefield mud. */
+      .ground {
         position: absolute;
         left: 0;
         right: 0;
         bottom: 0;
         height: 26%;
-        background: linear-gradient(180deg, #26331f 0%, #17200f 100%);
-        box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.5);
         z-index: 0;
+        background: linear-gradient(180deg, #3b3220 0%, #251d12 42%, #120d07 100%);
+        box-shadow: inset 0 8px 22px rgba(0, 0, 0, 0.55);
+      }
+
+      /* Firelit rim where the mud meets the burning sky. */
+      .ground::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(232, 132, 68, 0.55), transparent);
+      }
+
+      /* Subtle furrow / trampled-earth texture. */
+      .ground::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          92deg,
+          rgba(0, 0, 0, 0.14) 0 2px,
+          transparent 2px 44px
+        );
+        opacity: 0.45;
+      }
+
+      /* Drifting mist over the front line for atmosphere. */
+      .fog {
+        position: absolute;
+        left: -5%;
+        right: -5%;
+        bottom: 22%;
+        height: 12%;
+        z-index: 3;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          transparent,
+          rgba(190, 175, 165, 0.09) 50%,
+          transparent
+        );
+        animation: fog-drift 20s ease-in-out infinite;
+      }
+
+      @keyframes fog-drift {
+        0%,
+        100% { transform: translateX(-2%); }
+        50% { transform: translateX(2%); }
       }
 
       #arena-stage {
         position: absolute;
         inset: 0;
-        z-index: 1;
+        z-index: 2;
       }
 
       /* ---- Sprite units (elements are created in JS, so styles must be global) ---- */
@@ -103,6 +240,9 @@
         .sprite {
           animation: none !important;
           background-position-x: 0 !important;
+        }
+        .fog {
+          animation: none !important;
         }
       }
 
