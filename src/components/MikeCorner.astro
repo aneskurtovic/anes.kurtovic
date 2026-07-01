@@ -1,13 +1,25 @@
 ---
-// Floating entry point to the /arena easter egg. Reuses the existing Iron Mike
-// avatar (already canon in the site's Terminal gag) so no new art is needed.
-// Hidden until the visitor scrolls to the very bottom, then jumps out of the
-// bottom-right corner (tilted) with a bouncy entrance + idle peek-bob.
-import { tyson } from '../data/agents';
+// Floating entry point to the /arena easter egg. Uses a transparent-background
+// cutout of the Iron Mike avatar (tyson-corner.svg — the shared Terminal avatar
+// with its backdrop rectangle + decorative rings stripped) so he reads as a
+// real character leaning IN from behind the corner, not a framed "chat button".
+//
+// Three transform layers that must not fight each other:
+//   <a>        → reveal (rise) + hover lean       (pinned to the exact corner)
+//   .figure    → static shove INTO the corner      (bleeds off both edges)
+//   .portrait  → idle peek-bob + drop shadow
+// transform is visual-only, so bleeding the portrait past the viewport edges
+// clips it at the corner without ever creating scrollbars.
+//
+// Hidden until the visitor scrolls to the very bottom, then rises out of the
+// corner. On hover he leans in harder, glows, and pops a taunt bubble.
 ---
 
 <a class="mike-corner" href="/arena" aria-label="Enter the arena — Orcs vs Soldiers battle">
-  <img src={tyson.avatarNeutral} alt="" width="72" height="72" loading="lazy" />
+  <span class="mike-bubble" aria-hidden="true">Psst… wanna see a REAL fight? 👊</span>
+  <span class="mike-figure">
+    <img class="mike-portrait" src="/agents/tyson-corner.svg" alt="" width="184" height="184" loading="lazy" />
+  </span>
 </a>
 
 <script>
@@ -27,81 +39,156 @@ import { tyson } from '../data/agents';
 <style>
   .mike-corner {
     position: fixed;
-    right: 1rem;
-    bottom: 1rem;
+    right: 0;
+    bottom: 0;
     z-index: 1500;
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: var(--bg-card);
-    border: 2px solid var(--accent);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    width: 184px;
+    height: 184px;
+    display: block;
     cursor: pointer;
-    overflow: hidden;
     transform-origin: bottom right;
     /* Hidden state: tucked below the corner, not focusable, not clickable. */
     opacity: 0;
     visibility: hidden;
-    transform: translateY(135%) rotate(20deg) scale(0.6);
+    transform: translateY(115%) rotate(10deg);
     transition:
       opacity 0.35s ease,
-      transform 0.4s cubic-bezier(0.5, 0, 0.75, 0),
-      visibility 0.4s;
+      transform 0.3s ease,
+      visibility 0.45s;
   }
 
-  .mike-corner img {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    object-fit: cover;
+  /* Shove the portrait hard into the corner so it bleeds off the bottom + right
+     edges (transform is visual-only → clipped at the screen edge, no scroll).
+     Mike emerges FROM the corner instead of floating beside it. */
+  .mike-figure {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: translate(38px, 30px);
   }
 
-  /* Revealed at the page bottom: jump out of the corner, then bob to stay noticed. */
+  /* Transparent cutout — no ring, no card, no box. The drop shadow lifts the
+     silhouette off the page so he reads as a figure leaning in from the corner. */
+  .mike-portrait {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(-7px 5px 12px rgba(0, 0, 0, 0.65));
+  }
+
+  /* Revealed at the page bottom: rise out of the corner leaning in. */
   .mike-corner.revealed {
     visibility: visible;
     opacity: 1;
-    animation:
-      mike-jump-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-      mike-peek-bob 2.4s 0.65s ease-in-out infinite;
+    transform: translateY(0) rotate(-7deg); /* landed pose (base for hover) */
+    animation: mike-rise 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
+  /* Idle "peeking" bob lives on the img so the corner-shove + hover lean above
+     it never get overwritten. */
+  .mike-corner.revealed .mike-portrait {
+    animation: mike-bob 3s 0.75s ease-in-out infinite;
+  }
+
+  /* Hover / focus: lean in harder, purple glow (Iron Mike's canon accent),
+     freeze the bob, and reveal the taunt bubble. */
   .mike-corner.revealed:hover,
   .mike-corner.revealed:focus-visible {
-    animation-play-state: paused;
-    filter: brightness(1.12);
-    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.6);
+    transform: translateY(-8px) rotate(-11deg) scale(1.05);
     outline: none;
   }
 
-  /* Leap up from below the corner, overshoot with a tilt, settle leaning out. */
-  @keyframes mike-jump-in {
-    0% { transform: translateY(135%) rotate(22deg) scale(0.6); opacity: 0; }
-    55% { transform: translateY(-22%) rotate(-18deg) scale(1.1); opacity: 1; }
-    78% { transform: translateY(6%) rotate(-6deg) scale(0.97); }
-    100% { transform: translateY(0) rotate(-12deg) scale(1); opacity: 1; }
+  .mike-corner.revealed:hover .mike-portrait,
+  .mike-corner.revealed:focus-visible .mike-portrait {
+    animation-play-state: paused;
+    filter: drop-shadow(-6px 4px 22px rgba(168, 85, 247, 0.55));
   }
 
-  /* Gentle "peeking out of the corner" bob once he's landed. */
-  @keyframes mike-peek-bob {
-    0%, 100% { transform: translateY(0) rotate(-12deg); }
-    50% { transform: translateY(-7px) rotate(-16deg); }
+  /* Speech-bubble taunt, anchored up-left of his head (grows leftward from its
+     right edge so it never runs off the right of the screen). */
+  .mike-bubble {
+    position: absolute;
+    right: 50%;
+    bottom: 62%;
+    z-index: 1;
+    white-space: nowrap;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid #a855f7;
+    border-radius: 10px;
+    background: rgba(10, 10, 16, 0.96);
+    color: #f4f4f6;
+    font: 600 0.72rem/1 var(--font-mono, monospace);
+    box-shadow:
+      0 6px 18px rgba(0, 0, 0, 0.5),
+      0 0 16px rgba(168, 85, 247, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  /* Little tail pointing down toward Mike. */
+  .mike-bubble::after {
+    content: '';
+    position: absolute;
+    right: 14px;
+    bottom: -5px;
+    width: 10px;
+    height: 10px;
+    background: rgba(10, 10, 16, 0.96);
+    border-right: 1px solid #a855f7;
+    border-bottom: 1px solid #a855f7;
+    transform: rotate(45deg);
+  }
+
+  .mike-corner.revealed:hover .mike-bubble,
+  .mike-corner.revealed:focus-visible .mike-bubble {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes mike-rise {
+    0% { transform: translateY(115%) rotate(12deg); opacity: 0; }
+    60% { transform: translateY(-9%) rotate(-10deg); opacity: 1; }
+    100% { transform: translateY(0) rotate(-7deg); opacity: 1; }
+  }
+
+  @keyframes mike-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
 
   @media (max-width: 480px) {
-    .mike-corner,
-    .mike-corner img { width: 58px; height: 58px; }
+    .mike-corner {
+      width: 132px;
+      height: 132px;
+    }
+    .mike-figure {
+      transform: translate(30px, 24px);
+    }
+    .mike-bubble {
+      font-size: 0.64rem;
+    }
   }
 
-  /* Reduced motion: no slide/jump/bob — just fade in, held at a static tilt. */
+  /* Reduced motion: no rise/bob — just fade in, held at the leaning pose. The
+     bubble still fades on hover (opacity only, no slide). */
   @media (prefers-reduced-motion: reduce) {
     .mike-corner {
-      transform: translateY(0) rotate(-12deg);
+      transform: translateY(0) rotate(-7deg);
       transition: opacity 0.2s ease, visibility 0.2s;
     }
     .mike-corner.revealed {
       animation: none;
+    }
+    .mike-corner.revealed .mike-portrait {
+      animation: none;
+    }
+    .mike-bubble {
+      transform: none;
+      transition: opacity 0.2s ease;
     }
   }
 </style>
