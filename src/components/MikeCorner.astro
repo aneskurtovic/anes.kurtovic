@@ -1,12 +1,28 @@
 ---
 // Floating entry point to the /arena easter egg. Reuses the existing Iron Mike
 // avatar (already canon in the site's Terminal gag) so no new art is needed.
+// Hidden until the visitor scrolls to the very bottom, then jumps out of the
+// bottom-right corner (tilted) with a bouncy entrance + idle peek-bob.
 import { tyson } from '../data/agents';
 ---
 
 <a class="mike-corner" href="/arena" aria-label="Enter the arena — Orcs vs Soldiers battle">
   <img src={tyson.avatarNeutral} alt="" width="72" height="72" loading="lazy" />
 </a>
+
+<script>
+  const mike = document.querySelector('.mike-corner');
+  if (mike) {
+    const NEAR = 60; // px from the very bottom of the page before Mike leaps out
+    const atBottom = () =>
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - NEAR;
+    const update = () => mike.classList.toggle('revealed', atBottom());
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  }
+</script>
 
 <style>
   .mike-corner {
@@ -24,16 +40,15 @@ import { tyson } from '../data/agents';
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     cursor: pointer;
     overflow: hidden;
-    animation: mike-wiggle 2.8s ease-in-out infinite;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .mike-corner:hover,
-  .mike-corner:focus-visible {
-    animation-play-state: paused;
-    transform: scale(1.08);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
-    outline: none;
+    transform-origin: bottom right;
+    /* Hidden state: tucked below the corner, not focusable, not clickable. */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(135%) rotate(20deg) scale(0.6);
+    transition:
+      opacity 0.35s ease,
+      transform 0.4s cubic-bezier(0.5, 0, 0.75, 0),
+      visibility 0.4s;
   }
 
   .mike-corner img {
@@ -43,11 +58,35 @@ import { tyson } from '../data/agents';
     object-fit: cover;
   }
 
-  @keyframes mike-wiggle {
-    0%, 86%, 100% { transform: translateY(0) rotate(0deg); }
-    90% { transform: translateY(-4px) rotate(-7deg); }
-    94% { transform: translateY(-4px) rotate(7deg); }
-    98% { transform: translateY(0) rotate(0deg); }
+  /* Revealed at the page bottom: jump out of the corner, then bob to stay noticed. */
+  .mike-corner.revealed {
+    visibility: visible;
+    opacity: 1;
+    animation:
+      mike-jump-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+      mike-peek-bob 2.4s 0.65s ease-in-out infinite;
+  }
+
+  .mike-corner.revealed:hover,
+  .mike-corner.revealed:focus-visible {
+    animation-play-state: paused;
+    filter: brightness(1.12);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.6);
+    outline: none;
+  }
+
+  /* Leap up from below the corner, overshoot with a tilt, settle leaning out. */
+  @keyframes mike-jump-in {
+    0% { transform: translateY(135%) rotate(22deg) scale(0.6); opacity: 0; }
+    55% { transform: translateY(-22%) rotate(-18deg) scale(1.1); opacity: 1; }
+    78% { transform: translateY(6%) rotate(-6deg) scale(0.97); }
+    100% { transform: translateY(0) rotate(-12deg) scale(1); opacity: 1; }
+  }
+
+  /* Gentle "peeking out of the corner" bob once he's landed. */
+  @keyframes mike-peek-bob {
+    0%, 100% { transform: translateY(0) rotate(-12deg); }
+    50% { transform: translateY(-7px) rotate(-16deg); }
   }
 
   @media (max-width: 480px) {
@@ -55,7 +94,14 @@ import { tyson } from '../data/agents';
     .mike-corner img { width: 58px; height: 58px; }
   }
 
+  /* Reduced motion: no slide/jump/bob — just fade in, held at a static tilt. */
   @media (prefers-reduced-motion: reduce) {
-    .mike-corner { animation: none; }
+    .mike-corner {
+      transform: translateY(0) rotate(-12deg);
+      transition: opacity 0.2s ease, visibility 0.2s;
+    }
+    .mike-corner.revealed {
+      animation: none;
+    }
   }
 </style>
