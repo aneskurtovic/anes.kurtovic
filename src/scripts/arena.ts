@@ -213,6 +213,15 @@ export function initArena(): void {
       }
       if (now < u.busyUntil) continue; // locked in attack/hurt
 
+      // Cull anyone who broke through the line and marched off the field, so a
+      // runaway never permanently consumes a living slot on this endless screen.
+      // Spawn points (-40 / width-60) sit safely inside this margin.
+      if (u.x < -160 || u.x > stageWidth() + 160) {
+        u.remove = true;
+        anyRemoved = true;
+        continue;
+      }
+
       const enemy = nearestEnemy(u);
       if (enemy && Math.abs(enemy.x - u.x) <= REACH) {
         startAttack(u, enemy, now);
