@@ -38,19 +38,21 @@ const SHEETS: Record<Side, Record<State, string>> = {
 };
 
 // Tunables (durations in ms match the CSS animation lengths from Task 4).
-const SCALE = 1.8;
+const SCALE = 2.4;        // sprite zoom — big enough to read as a real battle
 const SPEED = 55;         // px/s march speed
 const REACH = 48;         // px dx at which a unit starts attacking
-const MIN_GAP = 34;       // px spacing kept behind a same-side ally
+const MIN_GAP = 28;       // px spacing kept behind a same-side ally
 const HP = 100;
 const ATTACK_MS = 520;
 const HIT_DELAY = 250;
 const HURT_MS = 300;
 const DEATH_MS = 600;
 const CORPSE_MS = 900;    // corpse linger after the death animation
-const MAX_PER_SIDE = 9;
-const SPAWN_MIN = 700;
-const SPAWN_VAR = 900;
+const MAX_PER_SIDE = 22;  // packed front line + reinforcements
+const SPAWN_MIN = 220;    // reinforcements arrive fast to keep the field full
+const SPAWN_VAR = 300;
+const SEED_PER_SIDE = 13; // pre-placed army so the brawl reads full instantly
+const SEED_SPACING = 26;  // horizontal gap between seeded ranks
 
 const dmg = () => 16 + Math.random() * 16;
 
@@ -91,9 +93,9 @@ export function initArena(): void {
     sprite.className = 'sprite';
     el.appendChild(sprite);
 
-    const lane = 8 + Math.floor(Math.random() * 72); // vertical spread, px from ground
+    const lane = 6 + Math.floor(Math.random() * 130); // vertical spread → deep ranks
     el.style.bottom = `${lane}px`;
-    el.style.zIndex = String(200 - lane);            // front (lower) units on top
+    el.style.zIndex = String(200 - lane);             // front (lower) units on top
     stage!.appendChild(el);
 
     const u: Unit = {
@@ -224,6 +226,22 @@ export function initArena(): void {
     raf = requestAnimationFrame(tick);
   }
 
+  // Seed a starting army on each side, spread across its own half, so the
+  // battlefield is crowded the instant the page loads (the spawner then tops
+  // each side up to MAX_PER_SIDE as fighters fall).
+  const w = stageWidth();
+  for (let i = 0; i < SEED_PER_SIDE; i++) {
+    spawn('soldier');
+    const s = units[units.length - 1];
+    s.x = 20 + i * SEED_SPACING; // ranks across the left
+    render(s);
+
+    spawn('orc');
+    const o = units[units.length - 1];
+    o.x = w - 60 - i * SEED_SPACING; // ranks across the right
+    render(o);
+  }
+
   // Pause the loop while the tab is hidden.
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
@@ -244,7 +262,7 @@ function renderStaticTableau(stage: HTMLElement): void {
     el.className = `unit ${side}`;
     el.style.bottom = `${bottom}px`;
     el.style.zIndex = String(200 - bottom);
-    el.style.transform = `translateX(${x}px) scale(1.8)`;
+    el.style.transform = `translateX(${x}px) scale(${SCALE})`;
     const sprite = document.createElement('div');
     sprite.className = 'sprite';
     sprite.style.backgroundImage = `url("${SHEETS[side][state]}")`; // frame 0, no st- class
@@ -253,10 +271,12 @@ function renderStaticTableau(stage: HTMLElement): void {
   };
 
   const mid = stage.clientWidth / 2;
-  place('soldier', mid - 190, 52, 'walk');
-  place('soldier', mid - 110, 26, 'attack');
-  place('orc', mid + 40, 26, 'attack');
-  place('orc', mid + 130, 54, 'walk');
+  place('soldier', mid - 250, 60, 'walk');
+  place('soldier', mid - 170, 30, 'attack');
+  place('soldier', mid - 90, 96, 'walk');
+  place('orc', mid + 20, 30, 'attack');
+  place('orc', mid + 110, 64, 'walk');
+  place('orc', mid + 190, 100, 'walk');
 
   const cap = document.createElement('p');
   cap.className = 'reduced-caption';
