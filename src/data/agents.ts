@@ -145,6 +145,17 @@ export const goggins: Interrupter = {
   ],
 };
 
+/** Fake boot sequence printed instantly when the terminal first opens,
+ *  before the first agent speaks. Sells the bait-and-switch: you came for a
+ *  helpful assistant, the budget says otherwise. */
+export const bootLines: string[] = [
+  'aneskurtovic.com — booting AI assistant…',
+  '> loading helpful_ai.exe ......... FAILED',
+  '> budget for a real assistant: $0.00',
+  '> rerouting to whoever is on shift…',
+  '> connection established. good luck.',
+];
+
 /** Shown small in the terminal footer. Keeps the parody framing explicit. */
 export const parodyNote =
   'Parody. Not affiliated with or endorsed by South Park, The Simpsons, David Goggins, or anyone with a legal department. It is a joke on a portfolio.';

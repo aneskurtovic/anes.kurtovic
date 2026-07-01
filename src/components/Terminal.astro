@@ -355,7 +355,7 @@ const start = agents[0];
 </style>
 
 <script>
-  import { agents, goggins, parodyNote } from '../data/agents';
+  import { agents, goggins, parodyNote, bootLines } from '../data/agents';
 
   const WORKER_URL = 'https://REPLACE-ME.workers.dev';
   // TODO: replace with deployed Worker URL (see worker/README.md).
@@ -485,8 +485,9 @@ const start = agents[0];
     document.body.style.overflow = 'hidden';
     applyAgent(current());
 
-    // If log is empty, show greeting (guard busy for the duration)
+    // If log is empty, run the fake boot sequence then the greeting
     if (log && log.childElementCount === 0) {
+      for (const b of bootLines) addLine(b, 'line-system');
       busy = true;
       typeLine(rand(current().greetings), 'line-agent', current().avatarNeutral, current().avatarTalking)
         .finally(() => { busy = false; });
