@@ -25,10 +25,14 @@ const BLOCKED = [
   /\btr[a4]nn(?:y|ie)/i,
 ];
 
-const rateBuckets = new Map<string, { count: number; resetAt: number }>();
+// Cloudflare Rate Limiting binding — see wrangler.toml [[ratelimits]].
+interface RateLimit {
+  limit(options: { key: string }): Promise<{ success: boolean }>;
+}
 
 interface Env {
   GROQ_API_KEY: string;
+  RATE_LIMITER: RateLimit;
 }
 
 function corsHeaders(origin: string): Record<string, string> {
@@ -86,27 +90,13 @@ export default {
       });
     }
 
-    // Rate limit by IP
-    // best-effort per-isolate limiter; upgrade to KV/Durable Objects for strict limits.
+    // Rate limit by IP via the Cloudflare Rate Limiting binding. Counters are
+    // kept per Cloudflare location (eventually consistent) and survive isolate
+    // recycling, so a single source is genuinely held to ~15 req/60s — a real
+    // upgrade over the old in-memory per-isolate counter.
     const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
-    const now = Date.now();
-    let bucket = rateBuckets.get(ip);
-
-    // Reset if time window expired
-    if (bucket && now > bucket.resetAt) {
-      bucket.count = 0;
-      bucket.resetAt = now + 60000;
-    }
-
-    // Create bucket if it doesn't exist
-    if (!bucket) {
-      bucket = { count: 0, resetAt: now + 60000 };
-      rateBuckets.set(ip, bucket);
-    }
-
-    // Increment and check
-    bucket.count++;
-    if (bucket.count > 15) {
+    const { success } = await env.RATE_LIMITER.limit({ key: ip });
+    if (!success) {
       return new Response(JSON.stringify({ error: 'rate_limited' }), {
         status: 429,
         headers: {
