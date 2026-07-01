@@ -357,9 +357,9 @@ const start = agents[0];
 <script>
   import { agents, goggins, parodyNote, bootLines } from '../data/agents';
 
-  const WORKER_URL = 'https://REPLACE-ME.workers.dev';
-  // TODO: replace with deployed Worker URL (see worker/README.md).
-  // Until then, asks gracefully fall back to canned lines.
+  // Deployed Cloudflare Worker (holds the Groq key; CORS-locked to this site).
+  // If it's ever unreachable, asks fall back to canned in-character lines.
+  const WORKER_URL = 'https://portfolio-agents.anes-kurtovic.workers.dev';
 
   // DOM elements
   const overlay = document.getElementById('terminal-overlay');
