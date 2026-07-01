@@ -1,0 +1,26 @@
+<svg viewBox="0 0 256 256" width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark rounded background -->
+  <rect width="256" height="256" rx="24" fill="#12121a"/>
+
+  <!-- Red intensity glow (semi-transparent) behind head -->
+  <circle cx="128" cy="128" r="95" fill="#ff4444" opacity="0.12"/>
+
+  <!-- Head (bald, brown skin) -->
+  <circle cx="128" cy="128" r="80" fill="#6b4a35"/>
+
+  <!-- Strong jaw -->
+  <rect x="68" y="155" width="120" height="48" rx="16" fill="#6b4a35"/>
+
+  <!-- Thick angled dark eyebrows (angry, pointing inward) -->
+  <path d="M 92 98 Q 108 82 124 92" stroke="#1a1a1a" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M 164 92 Q 148 82 132 98" stroke="#1a1a1a" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+  <!-- Eyes (narrowed, intense) -->
+  <ellipse cx="102" cy="118" rx="11" ry="15" fill="white"/>
+  <ellipse cx="154" cy="118" rx="11" ry="15" fill="white"/>
+  <circle cx="102" cy="118" r="7" fill="black"/>
+  <circle cx="154" cy="118" r="7" fill="black"/>
+
+  <!-- Neutral mouth (flat firm line) -->
+  <line x1="98" y1="178" x2="158" y2="178" stroke="#3a1f1a" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,32 @@
+<svg viewBox="0 0 256 256" width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark rounded background -->
+  <rect width="256" height="256" rx="24" fill="#12121a"/>
+
+  <!-- Face (pale peach, fills most of square) -->
+  <circle cx="128" cy="140" r="80" fill="#f1c9a5"/>
+
+  <!-- Red jacket collar (bottom) -->
+  <path d="M 70 200 L 100 215 L 156 215 L 186 200" fill="#c0392b"/>
+
+  <!-- Beanie hat (teal/turquoise) -->
+  <rect x="60" y="55" width="136" height="50" rx="20" fill="#4bbfae"/>
+
+  <!-- Yellow brim band -->
+  <rect x="60" y="95" width="136" height="12" fill="#f2d02c"/>
+
+  <!-- Yellow pom-pom on top -->
+  <circle cx="128" cy="50" r="9" fill="#f2d02c"/>
+
+  <!-- Eyes (white circles with black pupils, close together) -->
+  <circle cx="110" cy="130" r="13" fill="white"/>
+  <circle cx="146" cy="130" r="13" fill="white"/>
+  <circle cx="110" cy="130" r="8" fill="black"/>
+  <circle cx="146" cy="130" r="8" fill="black"/>
+
+  <!-- Eyebrows (small) -->
+  <path d="M 103 115 Q 110 110 117 115" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 139 115 Q 146 110 153 115" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Talking mouth (small open oval) -->
+  <ellipse cx="128" cy="171" rx="11" ry="15" fill="#7a2b25"/>
+</svg>

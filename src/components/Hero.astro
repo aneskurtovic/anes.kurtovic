@@ -63,6 +63,9 @@ const current = experiences[0];
           <a href="/resume/" class="btn btn-ghost">
             Résumé <span aria-hidden="true">→</span>
           </a>
+          <button type="button" class="btn btn-terminal" data-terminal-open>
+            $ meet my AI <span aria-hidden="true">▸</span>
+          </button>
         </div>
         <div class="social-links">
           {socialLinks.map((link) => (
@@ -386,6 +389,20 @@ const current = experiences[0];
 
   .btn-ghost:hover {
     color: var(--accent);
+  }
+
+  .btn-terminal {
+    font-family: var(--font-mono);
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    letter-spacing: -0.01em;
+  }
+
+  .btn-terminal:hover {
+    background: var(--accent-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px var(--accent-glow), 0 4px 15px rgba(0, 0, 0, 0.3);
   }
 
   .social-links {
