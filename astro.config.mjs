@@ -23,6 +23,7 @@ export default defineConfig({
   site: 'https://aneskurtovic.com',
   integrations: [
     sitemap({
+      filter: (page) => !page.includes('/arena'),
       changefreq: 'monthly',
       priority: 0.7,
       serialize(item) {

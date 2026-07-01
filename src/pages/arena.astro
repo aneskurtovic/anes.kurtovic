@@ -1,0 +1,123 @@
+---
+// Standalone easter-egg page — deliberately does NOT use Layout.astro (no nav,
+// no Mike button, no portfolio chrome). noindex + excluded from the sitemap so
+// it stays a hidden gem. The battle is mounted by src/scripts/arena.ts (Task 5).
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>⚔️ Arena — Orcs vs Soldiers</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <main class="arena">
+      <a class="back-btn" href="/">← Back to portfolio</a>
+      <h1 class="sr-only">Orcs vs Soldiers — an endless pixel battle</h1>
+      <div id="arena-stage" aria-hidden="true"></div>
+      <p class="credit">Sprites: "Tiny RPG Character Asset Pack" — used with thanks.</p>
+    </main>
+
+    <style is:global>
+      @import '../styles/global.css';
+
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .arena {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        background:
+          radial-gradient(120% 90% at 50% 0%, #1b2438 0%, #0b0e16 60%, #05060a 100%);
+        overflow: hidden;
+        font-family: var(--font-mono, monospace);
+      }
+
+      /* Ground band the units stand on. */
+      .arena::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 26%;
+        background: linear-gradient(180deg, #26331f 0%, #17200f 100%);
+        box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.5);
+        z-index: 0;
+      }
+
+      #arena-stage {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+
+      .back-btn {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        z-index: 10;
+        font-family: var(--font-mono, monospace);
+        font-size: 0.8rem;
+        color: var(--text, #e5e7eb);
+        text-decoration: none;
+        padding: 0.5rem 0.9rem;
+        border: 1px solid var(--accent, #38bdf8);
+        border-radius: var(--radius, 8px);
+        background: rgba(5, 6, 10, 0.6);
+        transition: background 0.2s, transform 0.2s;
+      }
+
+      .back-btn:hover,
+      .back-btn:focus-visible {
+        background: var(--accent, #38bdf8);
+        color: #05060a;
+        transform: translateX(-2px);
+      }
+
+      .credit {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0.5rem;
+        z-index: 10;
+        margin: 0;
+        text-align: center;
+        font-size: 0.6rem;
+        color: rgba(229, 231, 235, 0.5);
+      }
+
+      .reduced-caption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 42%;
+        z-index: 5;
+        margin: 0;
+        text-align: center;
+        font-size: 1rem;
+        color: var(--text, #e5e7eb);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </body>
+</html>
