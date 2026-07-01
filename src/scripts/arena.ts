@@ -10,6 +10,7 @@ interface Unit {
   sprite: HTMLDivElement;
   side: Side;
   x: number;           // left offset within the stage, in px
+  lane: number;        // vertical band (px from ground) — for lane-aware spacing
   hp: number;
   state: State;
   busyUntil: number;   // ms timestamp — locked in a one-shot (attack/hurt)
@@ -53,6 +54,7 @@ const SPAWN_MIN = 220;    // reinforcements arrive fast to keep the field full
 const SPAWN_VAR = 300;
 const SEED_PER_SIDE = 13; // pre-placed army so the brawl reads full instantly
 const SEED_SPACING = 26;  // horizontal gap between seeded ranks
+const LANE_BAND = 24;     // only allies within this vertical band block advance
 
 const dmg = () => 16 + Math.random() * 16;
 
@@ -93,7 +95,10 @@ export function initArena(): void {
     sprite.className = 'sprite';
     el.appendChild(sprite);
 
-    const lane = 6 + Math.floor(Math.random() * 130); // vertical spread → deep ranks
+    // Keep ranks inside the visible ground band (26% of stage height), so units
+    // never float above the dirt on short/landscape viewports.
+    const laneMax = Math.max(48, Math.min(130, stage!.clientHeight * 0.26 - 24));
+    const lane = 6 + Math.floor(Math.random() * laneMax); // vertical spread → deep ranks
     el.style.bottom = `${lane}px`;
     el.style.zIndex = String(200 - lane);             // front (lower) units on top
     stage!.appendChild(el);
@@ -103,6 +108,7 @@ export function initArena(): void {
       sprite,
       side,
       x: side === 'soldier' ? -40 : stageWidth() - 60,
+      lane,
       hp: HP,
       state: 'walk',
       busyUntil: 0,
@@ -141,6 +147,7 @@ export function initArena(): void {
     const dir = u.side === 'soldier' ? 1 : -1;
     for (const o of units) {
       if (o === u || o.side !== u.side || o.state === 'death') continue;
+      if (Math.abs(o.lane - u.lane) > LANE_BAND) continue; // only same-row allies block
       const gap = (o.x - u.x) * dir; // > 0 means o is ahead of u
       if (gap > 0 && gap < MIN_GAP) return true;
     }
@@ -191,9 +198,13 @@ export function initArena(): void {
     maybeSpawn('soldier', now);
     maybeSpawn('orc', now);
 
+    let anyRemoved = false;
     for (const u of units) {
       if (u.state === 'death') {
-        if (now >= u.deathDoneAt) u.remove = true;
+        if (now >= u.deathDoneAt) {
+          u.remove = true;
+          anyRemoved = true;
+        }
         continue;
       }
       if (u.pendingHit && now >= u.hitAt) {
@@ -215,13 +226,17 @@ export function initArena(): void {
       }
     }
 
-    units = units.filter((u) => {
-      if (u.remove) {
-        u.el.remove();
-        return false;
-      }
-      return true;
-    });
+    // Only rebuild the array on frames where a corpse actually expired — most
+    // frames allocate nothing (honours the "no per-frame allocation" constraint).
+    if (anyRemoved) {
+      units = units.filter((u) => {
+        if (u.remove) {
+          u.el.remove();
+          return false;
+        }
+        return true;
+      });
+    }
 
     raf = requestAnimationFrame(tick);
   }
@@ -230,7 +245,10 @@ export function initArena(): void {
   // battlefield is crowded the instant the page loads (the spawner then tops
   // each side up to MAX_PER_SIDE as fighters fall).
   const w = stageWidth();
-  for (let i = 0; i < SEED_PER_SIDE; i++) {
+  // Fit the seeded ranks inside each half so they never overlap in the middle
+  // on narrow (phone) viewports.
+  const seedCount = Math.max(4, Math.min(SEED_PER_SIDE, Math.floor((w / 2 - 50) / SEED_SPACING)));
+  for (let i = 0; i < seedCount; i++) {
     spawn('soldier');
     const s = units[units.length - 1];
     s.x = 20 + i * SEED_SPACING; // ranks across the left
@@ -271,12 +289,15 @@ function renderStaticTableau(stage: HTMLElement): void {
   };
 
   const mid = stage.clientWidth / 2;
-  place('soldier', mid - 250, 60, 'walk');
-  place('soldier', mid - 170, 30, 'attack');
-  place('soldier', mid - 90, 96, 'walk');
-  place('orc', mid + 20, 30, 'attack');
-  place('orc', mid + 110, 64, 'walk');
-  place('orc', mid + 190, 100, 'walk');
+  const step = Math.min(80, (mid - 40) / 3); // fits within the viewport on mobile
+  const groundPx = stage.clientHeight * 0.26;
+  const b = (v: number) => Math.min(v, Math.max(24, groundPx - 24)); // keep on the dirt
+  place('soldier', mid - step * 2.6, b(60), 'walk');
+  place('soldier', mid - step * 1.6, b(30), 'attack');
+  place('soldier', mid - step * 0.7, b(96), 'walk');
+  place('orc', mid + step * 0.3, b(30), 'attack');
+  place('orc', mid + step * 1.3, b(64), 'walk');
+  place('orc', mid + step * 2.2, b(100), 'walk');
 
   const cap = document.createElement('p');
   cap.className = 'reduced-caption';
