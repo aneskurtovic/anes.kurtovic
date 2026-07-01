@@ -182,22 +182,23 @@ const start = agents[0];
     gap: 0.5rem;
   }
 
-  .line-agent {
+  /* Log lines are built with createElement, so they never receive Astro's
+     scoped data-attribute — every line rule must be :global() to apply.
+     Agent reply lines get their speaker's accent set inline in JS, so each
+     agent's text renders in that agent's own unique colour. */
+  :global(.line-agent) {
     color: var(--text);
   }
 
-  .line-user {
+  :global(.line-user) {
     color: var(--text-muted);
   }
 
-  .line-user::before {
+  :global(.line-user)::before {
     content: 'you> ';
     color: var(--text-muted);
   }
 
-  /* Interrupter lines are injected into the log via createElement, so they
-     never receive Astro's scoped data-attribute. Use :global() so the color
-     actually applies to these dynamically-created elements. */
   :global(.line-goggins) {
     color: #ef4444;
     font-weight: 700;
@@ -210,7 +211,7 @@ const start = agents[0];
     letter-spacing: 0.02em;
   }
 
-  .line-system {
+  :global(.line-system) {
     color: var(--text-muted);
     font-style: italic;
     font-size: 0.75rem;
@@ -425,9 +426,10 @@ const start = agents[0];
     if (log) log.scrollTop = log.scrollHeight;
   }
 
-  function addLine(text: string, cls: string): HTMLElement {
+  function addLine(text: string, cls: string, color?: string): HTMLElement {
     const el = document.createElement('div');
     el.className = `line ${cls}`;
+    if (color) el.style.color = color;
     el.textContent = text;
     if (log) log.appendChild(el);
     scrollLog();
@@ -438,16 +440,18 @@ const start = agents[0];
     text: string,
     cls: string,
     avatarSrcNeutral: string,
-    avatarSrcTalking: string
+    avatarSrcTalking: string,
+    color?: string
   ): Promise<void> {
     if (reduce) {
       // Skip animation, just set instantly
-      addLine(text, cls);
+      addLine(text, cls, color);
       return;
     }
 
     const el = document.createElement('div');
     el.className = `line ${cls}`;
+    if (color) el.style.color = color;
     if (log) log.appendChild(el);
 
     if (avatar) avatar.classList.add('speaking');
@@ -498,7 +502,7 @@ const start = agents[0];
     if (log && log.childElementCount === 0) {
       for (const b of bootLines) addLine(b, 'line-system');
       busy = true;
-      typeLine(rand(current().greetings), 'line-agent', current().avatarNeutral, current().avatarTalking)
+      typeLine(rand(current().greetings), 'line-agent', current().avatarNeutral, current().avatarTalking, current().accent)
         .finally(() => { busy = false; });
     }
 
@@ -517,7 +521,7 @@ const start = agents[0];
     if (busy) return;
     busy = true;
     try {
-      await typeLine(rand(current().swapOut), 'line-agent', current().avatarNeutral, current().avatarTalking);
+      await typeLine(rand(current().swapOut), 'line-agent', current().avatarNeutral, current().avatarTalking, current().accent);
 
       if (avatar) {
         avatar.classList.add('swapping');
@@ -529,7 +533,7 @@ const start = agents[0];
       history = [];
       applyAgent(current());
 
-      await typeLine(rand(current().swapIn), 'line-agent', current().avatarNeutral, current().avatarTalking);
+      await typeLine(rand(current().swapIn), 'line-agent', current().avatarNeutral, current().avatarTalking, current().accent);
     } finally {
       busy = false;
       if (input) input.focus();
@@ -559,7 +563,7 @@ const start = agents[0];
 
       // Mike leaves; the on-shift agent returns and mocks you for even trying.
       applyAgent(prev);
-      await typeLine(rand(prev.anesMock), 'line-agent', prev.avatarNeutral, prev.avatarTalking);
+      await typeLine(rand(prev.anesMock), 'line-agent', prev.avatarNeutral, prev.avatarTalking, prev.accent);
     } finally {
       if (flash) flash.style.background = '';
       busy = false;
@@ -595,7 +599,7 @@ const start = agents[0];
       await new Promise((r) => setTimeout(r, reduce ? 200 : 900));
 
       applyAgent(prev);
-      await typeLine(rand(prev.resume), 'line-agent', prev.avatarNeutral, prev.avatarTalking);
+      await typeLine(rand(prev.resume), 'line-agent', prev.avatarNeutral, prev.avatarTalking, prev.accent);
     } finally {
       busy = false;
       if (input) input.focus();
@@ -638,11 +642,11 @@ const start = agents[0];
       if (!reply) throw new Error('No reply from worker');
 
       history.push({ role: 'assistant', content: reply });
-      await typeLine(reply, 'line-agent', current().avatarNeutral, current().avatarTalking);
+      await typeLine(reply, 'line-agent', current().avatarNeutral, current().avatarTalking, current().accent);
     } catch (err) {
       typing.remove();
       if (avatar) avatar.classList.remove('speaking');
-      await typeLine(rand(current().askFallback), 'line-agent', current().avatarNeutral, current().avatarTalking);
+      await typeLine(rand(current().askFallback), 'line-agent', current().avatarNeutral, current().avatarTalking, current().accent);
     } finally {
       busy = false;
       if (input) input.focus();
