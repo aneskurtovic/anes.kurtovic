@@ -195,8 +195,17 @@ const start = agents[0];
     color: var(--text-muted);
   }
 
-  .line-goggins {
+  /* Interrupter lines are injected into the log via createElement, so they
+     never receive Astro's scoped data-attribute. Use :global() so the color
+     actually applies to these dynamically-created elements. */
+  :global(.line-goggins) {
     color: #ef4444;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  :global(.line-tyson) {
+    color: #a855f7;
     font-weight: 700;
     letter-spacing: 0.02em;
   }
@@ -355,7 +364,7 @@ const start = agents[0];
 </style>
 
 <script>
-  import { agents, goggins, parodyNote, bootLines } from '../data/agents';
+  import { agents, goggins, tyson, parodyNote, bootLines } from '../data/agents';
 
   // Deployed Cloudflare Worker (holds the Groq key; CORS-locked to this site).
   // If it's ever unreachable, asks fall back to canned in-character lines.
@@ -531,8 +540,28 @@ const start = agents[0];
     if (busy) return;
     busy = true;
     try {
-      await typeLine(rand(current().anesMock), 'line-agent', current().avatarNeutral, current().avatarTalking);
+      const prev = current();
+
+      // Iron Mike busts in as Anes's bodyguard and blocks the door.
+      applyAgent(tyson as any);
+      if (flash) flash.style.background = tyson.accent;
+      if (avatar) avatar.classList.add('goggins-in');
+      if (flash) flash.classList.add('hit');
+
+      await new Promise((r) => setTimeout(r, 600));
+
+      if (avatar) avatar.classList.remove('goggins-in');
+      if (flash) flash.classList.remove('hit');
+
+      await typeLine(rand(tyson.lines), 'line-tyson', tyson.avatarNeutral, tyson.avatarTalking);
+
+      await new Promise((r) => setTimeout(r, reduce ? 200 : 900));
+
+      // Mike leaves; the on-shift agent returns and mocks you for even trying.
+      applyAgent(prev);
+      await typeLine(rand(prev.anesMock), 'line-agent', prev.avatarNeutral, prev.avatarTalking);
     } finally {
+      if (flash) flash.style.background = '';
       busy = false;
       if (input) input.focus();
     }
@@ -561,7 +590,7 @@ const start = agents[0];
         flash.classList.remove('hit');
       }
 
-      await typeLine(rand(goggins.quitLines), 'line-goggins', goggins.avatarNeutral, goggins.avatarTalking);
+      await typeLine(rand(goggins.lines), 'line-goggins', goggins.avatarNeutral, goggins.avatarTalking);
 
       await new Promise((r) => setTimeout(r, reduce ? 200 : 900));
 

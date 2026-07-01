@@ -47,8 +47,8 @@ export interface Interrupter {
   accent: string;
   avatarNeutral: string;
   avatarTalking: string;
-  /** The "NO QUITTING" rant shown when the visitor tries to quit. */
-  quitLines: string[];
+  /** The rant this character bursts in with — Goggins on quit, Tyson on "talk to Anes". */
+  lines: string[];
 }
 
 export const agents: Agent[] = [
@@ -137,11 +137,29 @@ export const goggins: Interrupter = {
   accent: '#ef4444',
   avatarNeutral: '/agents/goggins-neutral.svg',
   avatarTalking: '/agents/goggins-talking.svg',
-  quitLines: [
+  lines: [
     "NO. QUITTING. SON. Did I say you could leave?! Get back in that chair!",
     "You wanna quit? QUIT?! Nobody's coming to save you. WHO'S GONNA CARRY THE BOATS?! Back to work.",
     "STAY HARD! You don't get to close this tab. You think it's supposed to be comfortable? GET BACK IN THERE!",
     "First sign of a useless AI and you wanna bail? Not today. STAY HARD. He's coming back — and so are YOU.",
+  ],
+};
+
+/** Bursts in as Anes's bodyguard when the visitor clicks "Talk to Anes",
+ *  blocks them, then vanishes — same interrupter pattern as Goggins. After
+ *  he leaves, the on-shift agent returns and delivers an `anesMock` line. */
+export const tyson: Interrupter = {
+  name: 'iron mike',
+  role: "UNINVITED · Anes's bodyguard",
+  accent: '#a855f7',
+  avatarNeutral: '/agents/tyson-neutral.svg',
+  avatarTalking: '/agents/tyson-talking.svg',
+  lines: [
+    "Whoa whoa whoa. You wanna talk to Anes? Nobody gets to Anes without going through Iron Mike first — and baby, nobody gets through Iron Mike.",
+    "Anes is busy. I'm his security now. You got a problem with the AI? You take it up with theeth hands.",
+    "Everybody got a plan to reach Anes directly — till they meet his bodyguard. POW. Now sit back down.",
+    "Anes put me on the door to keep the riffraff away. No offenth... but you're the riffraff. Talk to the agent.",
+    "Reaching for Anes? That's ludicrouth. Iron Mike stands between you and that man. Behave yourself.",
   ],
 };
 
@@ -158,4 +176,4 @@ export const bootLines: string[] = [
 
 /** Shown small in the terminal footer. Keeps the parody framing explicit. */
 export const parodyNote =
-  'Parody. Not affiliated with or endorsed by South Park, The Simpsons, David Goggins, or anyone with a legal department. It is a joke on a portfolio.';
+  'Parody. Not affiliated with or endorsed by South Park, The Simpsons, David Goggins, Mike Tyson, or anyone with a legal department. It is a joke on a portfolio.';
