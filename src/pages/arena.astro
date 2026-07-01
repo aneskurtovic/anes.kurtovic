@@ -22,23 +22,8 @@
     </main>
 
     <script>
-      // TEMPORARY proof — replaced by the engine in Task 5.
-      const stage = document.getElementById('arena-stage');
-      function proof(side, state, x, bottom) {
-        const el = document.createElement('div');
-        el.className = `unit ${side}`;
-        el.style.bottom = `${bottom}px`;
-        el.style.transform = `translateX(${x}px) scale(1.8)`;
-        const sprite = document.createElement('div');
-        sprite.className = `sprite st-${state}`;
-        sprite.style.backgroundImage = `url("/arena/sprites/${side}-${state}.png")`;
-        el.appendChild(sprite);
-        stage.appendChild(el);
-      }
-      proof('soldier', 'walk', 120, 40);
-      proof('soldier', 'attack', 260, 40);
-      proof('orc', 'walk', window.innerWidth - 200, 40);
-      proof('orc', 'attack', window.innerWidth - 340, 40);
+      import { initArena } from '../scripts/arena';
+      initArena();
     </script>
 
     <style is:global>
