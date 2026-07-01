@@ -1,0 +1,61 @@
+---
+// Floating entry point to the /arena easter egg. Reuses the existing Iron Mike
+// avatar (already canon in the site's Terminal gag) so no new art is needed.
+import { tyson } from '../data/agents';
+---
+
+<a class="mike-corner" href="/arena" aria-label="Enter the arena — Orcs vs Soldiers battle">
+  <img src={tyson.avatarNeutral} alt="" width="72" height="72" loading="lazy" />
+</a>
+
+<style>
+  .mike-corner {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1500;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--bg-card);
+    border: 2px solid var(--accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    overflow: hidden;
+    animation: mike-wiggle 2.8s ease-in-out infinite;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .mike-corner:hover,
+  .mike-corner:focus-visible {
+    animation-play-state: paused;
+    transform: scale(1.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    outline: none;
+  }
+
+  .mike-corner img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  @keyframes mike-wiggle {
+    0%, 86%, 100% { transform: translateY(0) rotate(0deg); }
+    90% { transform: translateY(-4px) rotate(-7deg); }
+    94% { transform: translateY(-4px) rotate(7deg); }
+    98% { transform: translateY(0) rotate(0deg); }
+  }
+
+  @media (max-width: 480px) {
+    .mike-corner,
+    .mike-corner img { width: 58px; height: 58px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mike-corner { animation: none; }
+  }
+</style>

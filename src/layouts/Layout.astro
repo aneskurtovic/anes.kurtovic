@@ -2,6 +2,7 @@
 import { getImage } from 'astro:assets';
 import profileImg from '../assets/anes-kurtovic.png';
 import Terminal from '../components/Terminal.astro';
+import MikeCorner from '../components/MikeCorner.astro';
 
 interface Props {
   title?: string;
@@ -134,6 +135,7 @@ const structuredData = {
     <div id="scroll-progress" aria-hidden="true"></div>
     <slot />
     <Terminal />
+    <MikeCorner />
 
     <script is:inline>
       document.addEventListener('DOMContentLoaded', () => {
